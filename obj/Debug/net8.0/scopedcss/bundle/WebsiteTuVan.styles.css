@@ -1,49 +1,76 @@
 /* _content/WebsiteTuVan/Views/Shared/_Layout.cshtml.rz.scp.css */
-/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand[b-60um3onpp3] {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+.search-input[b-60um3onpp3] {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  min-width: 240px;
 }
 
-a[b-60um3onpp3] {
-  color: #0077cc;
+.search-btn[b-60um3onpp3] {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: white;
+  border-color: #ced4da;
 }
 
-.btn-primary[b-60um3onpp3] {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+/* Navigation menu styling */
+.navbar-nav .nav-link[b-60um3onpp3] {
+  padding: 0.75rem 1rem;
+  font-weight: 500;
 }
 
-.nav-pills .nav-link.active[b-60um3onpp3], .nav-pills .show > .nav-link[b-60um3onpp3] {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.navbar-nav .nav-link:hover[b-60um3onpp3] {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-.border-top[b-60um3onpp3] {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom[b-60um3onpp3] {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow[b-60um3onpp3] {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+/* Footer styling */
+footer h5[b-60um3onpp3] {
+  font-weight: 600;
+  position: relative;
 }
 
-button.accept-policy[b-60um3onpp3] {
-  font-size: 1rem;
-  line-height: inherit;
+footer .list-unstyled li[b-60um3onpp3] {
+  margin-bottom: 0.5rem;
 }
 
-.footer[b-60um3onpp3] {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .search-box[b-60um3onpp3] {
+      margin-bottom: 1rem;
+      width: 100%;
+  }
+  
+  .contact-info[b-60um3onpp3] {
+      width: 100%;
+      justify-content: center;
+      margin-top: 1rem;
+  }
+  
+  .navbar-nav[b-60um3onpp3] {
+      padding: 0.5rem 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .contact-info .hotline span.btn[b-60um3onpp3] {
+      padding: 0.375rem 0.5rem;
+  }
+  
+  footer .col-md-6[b-60um3onpp3] {
+      margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .contact-info[b-60um3onpp3] {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+  
+  .contact-info .hotline[b-60um3onpp3] {
+      margin-bottom: 1rem;
+  }
+  
+  .navbar-nav .nav-link[b-60um3onpp3] {
+      padding: 0.5rem 1rem;
+  }
 }

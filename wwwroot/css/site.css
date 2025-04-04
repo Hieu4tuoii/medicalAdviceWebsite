@@ -1,22 +1,285 @@
-html {
-  font-size: 14px;
+/* --- General --- */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* Default BS font stack */
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
+main {
+  flex-grow: 1;
+}
+
+a {
+  /* text-decoration: none; /* Optional: Remove underline globally */
+}
+
+/* --- Constants (Optional: Use CSS variables for easier changes) --- */
+:root {
+  --primary-green: #28a745; /* Hoặc mã màu xanh chính xác từ ảnh */
+  --dark-footer-bg: #1a1a1a; /* Hoặc mã màu đen/xám chính xác từ ảnh */
+  --light-text-footer: #cccccc;
+  --border-color-search: #ced4da;
+  --button-chat-blue: #0d6efd; /* Standard Bootstrap blue */
+}
+
+/* --- Header --- */
+
+/* Top Header */
+.top-header {
+  background-color: #fff;
+  /* border-bottom: 1px solid #dee2e6; */ /* Kept the border */
+}
+
+.search-form .input-group {
+  border: 1px solid var(--border-color-search);
+  border-radius: 0.375rem; /* Standard Bootstrap radius */
+  overflow: hidden; /* Hide button border overlap */
+}
+
+.search-form .search-input {
+  border: none; /* Remove default border */
+  box-shadow: none; /* Remove focus shadow */
+}
+.search-form .search-input:focus {
+   /* Optional: add focus style if needed */
+}
+
+.search-form .search-button {
+  border: none; /* Remove default border */
+  background-color: #fff; /* Match input background */
+  color: #6c757d; /* Icon color */
+  padding: 0.375rem 0.75rem;
+  border-left: 1px solid var(--border-color-search); /* Add separator line */
+  border-radius: 0; /* Remove button radius */
+}
+.search-form .search-button:hover {
+  background-color: #f8f9fa; /* Slight hover effect */
+}
+
+
+.hotline .icon-phone {
+  color: var(--primary-green);
+  vertical-align: middle;
+}
+.hotline span {
+  vertical-align: middle;
+  font-size: 1rem;
+}
+
+.btn-ask {
+  background-color: var(--primary-green);
+  border-color: var(--primary-green);
+  color: #fff;
+  font-weight: bold;
+  padding: 0.5rem 1.25rem; /* Adjust padding */
+  font-size: 0.9rem;
+  border-radius: 0.375rem;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+.btn-ask:hover {
+  background-color: #218838; /* Darker green on hover */
+  border-color: #1e7e34;
+  color: #fff;
+}
+.btn-ask i {
+  vertical-align: middle; /* Align icon nicely */
+  margin-top: -2px; /* Fine-tune vertical position */
+}
+
+
+/* Main Navigation */
+.main-navbar {
+  background-color: var(--primary-green);
+}
+
+.main-navbar .navbar-nav .nav-link {
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 500; /* Match image weight */
+  font-size: 0.875rem; /* Adjust font size */
+  padding-top: 1rem; /* Increase padding for taller bar */
+  padding-bottom: 1rem;
+  border-radius: 0; /* Remove radius from hover effect */
+  transition: background-color 0.15s ease-in-out;
+}
+
+.main-navbar .navbar-nav .nav-link:hover,
+.main-navbar .navbar-nav .nav-link.active,
+.main-navbar .navbar-nav .show > .nav-link {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.1); /* Subtle dark transparent background */
+}
+
+/* Navbar toggler */
+.main-navbar .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.2);
+  padding: 0.35rem 0.65rem;
+}
+.main-navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  width: 1.2em; /* Adjust size if needed */
+  height: 1.2em;
+}
+
+/* Dropdown menu in navbar */
+.main-navbar .dropdown-menu {
+  background-color: #f8f9fa;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 0.25rem;
+  margin-top: 0.125rem; /* Adjust spacing */
+}
+.main-navbar .dropdown-item {
+  color: #212529;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+.main-navbar .dropdown-item:hover,
+.main-navbar .dropdown-item:focus {
+  background-color: #e9ecef;
+  color: #000;
+}
+
+/* --- Footer --- */
+.footer {
+  background-color: var(--dark-footer-bg);
+  color: var(--light-text-footer);
+  font-size: 0.875rem; /* Adjust base font size for footer */
+}
+
+.footer-title {
+  color: #fff;
+  font-weight: 600; /* Slightly bolder */
+  text-transform: uppercase;
+  font-size: 1rem; /* Title font size */
+  position: relative;
+  padding-bottom: 0.75rem; /* Space for underline */
+  /* margin-bottom: 1.5rem; */ /* Already set in HTML */
+}
+
+.footer-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px; /* Width of the underline */
+  height: 3px; /* Thickness of the underline */
+  background-color: var(--primary-green);
+}
+
+.footer-links li {
+  padding: 0.2rem 0; /* Adjust spacing between links */
+  line-height: 1.6;
+}
+
+.footer-icon {
+ /* color: #6c757d; /* Slightly muted icon color */
+ color: var(--primary-green); /* Or make them green? Check image */
+ /* Use fa-fw in HTML for alignment */
+}
+.footer-icon-chevron {
+  color: var(--light-text-footer); /* Chevron color same as text */
+  opacity: 0.7;
+}
+
+.footer-service-links a {
+  text-decoration: none; /* Remove underline from service links */
+  transition: color 0.15s ease-in-out;
+}
+.footer-service-links a:hover {
+  color: #fff !important; /* White text on hover */
+  text-decoration: underline !important; /* Add underline ONLY on hover */
+}
+
+.footer-hr {
+  border-top: 1px solid #444; /* Darker separator */
+}
+
+.footer-bottom-text {
+  color: #a0a0a0; /* Slightly dimmer text for bottom */
+}
+
+.btn-chat {
+  background-color: var(--button-chat-blue);
+  border-color: var(--button-chat-blue);
+  color: #fff;
+  font-size: 0.8rem; /* Smaller button text */
+  padding: 0.3rem 0.8rem;
+}
+.btn-chat:hover {
+   background-color: #0b5ed7;
+   border-color: #0a58ca;
+   color: #fff;
+}
+
+.btn-footer-call {
+  background-color: var(--primary-green);
+  border-color: var(--primary-green);
+  color: #fff;
+  font-size: 0.8rem; /* Smaller button text */
+  padding: 0.3rem 0.8rem;
+}
+.btn-footer-call:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+  color: #fff;
+}
+
+/* --- Responsive Adjustments --- */
+
+/* Medium devices (tablets, less than 992px) */
+@media (max-width: 991.98px) {
+  .main-navbar .navbar-nav {
+      margin-top: 0.5rem; /* Space above nav items in collapsed menu */
+  }
+   .main-navbar .navbar-nav .nav-link {
+       padding-top: 0.75rem; /* Adjust padding for collapsed items */
+       padding-bottom: 0.75rem;
+   }
+   .main-navbar .ms-auto {
+      margin-left: 0 !important; /* Override ms-auto for collapsed menu */
+  }
+  .top-header .justify-content-lg-end {
+       justify-content: center !important; /* Center hotline/ask on medium */
+   }
+   .footer .col-md-12 { /* Make 3rd col (Working Hours) full width earlier if needed */
+     /* margin-top: 1.5rem; */ /* Add space if it becomes full width */
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) {
+  .footer .text-md-end {
+      text-align: center !important; /* Center buttons on small screens */
+  }
+   .footer .text-md-start {
+      text-align: center !important; /* Center copyright text on small screens */
+  }
+  .footer .btn {
+      margin-bottom: 0.5rem; /* Add space between buttons if they stack */
+  }
+   .footer .btn:last-child {
+      margin-bottom: 0;
+  }
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+ /* Make fonts slightly smaller if needed */
+ html {
+      font-size: 95%;
+  }
+ .top-header {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+ }
+ .btn-ask {
+      padding: 0.4rem 1rem;
+ }
+ .footer {
+     padding-top: 2rem;
+ }
+ .footer-title {
+      font-size: 0.95rem;
+  }
 }
