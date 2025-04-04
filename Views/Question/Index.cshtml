@@ -1,0 +1,29 @@
+@model IEnumerable<WebsiteTuVan.Models.Question>
+
+@{
+    ViewData["Title"] = "Danh sách câu hỏi";
+}
+
+<h1>Danh sách câu hỏi</h1>
+
+<div class="row">
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var question in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@question.Title</h5>
+                        <p class="card-text">@question.Content</p>
+                        <a asp-action="Details" asp-route-id="@question.Id" class="btn btn-primary">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>Không có câu hỏi nào.</p>
+    }
+</div>
