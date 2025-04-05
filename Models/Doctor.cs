@@ -8,12 +8,7 @@ public class Doctor{
     public int Id { get; set ;}
 
     [Required]
-    [StringLength(100, ErrorMessage = "Tên không được vượt quá 100 ký tự")]
-    public string Name { get; set; }
-
-    [Required]
-    public int CategoryId { get; set; } //id danh mục chuyên môn
-    public virtual Category Specialization { get; set; }
+    public string Specialization { get; set; }
 
     //năm bắt đầu làm việc
     [Required]
