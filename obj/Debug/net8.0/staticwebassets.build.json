@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "JMmQ2lvlCfNzgmT6VDPeEjTEaDiTxK6Wxwot1ywGB4k=",
+  "Hash": "yJowPe8X+JwBsUNoQTSOgI8TyPXZnS2b4tBvb59MFCs=",
   "Source": "WebsiteTuVan",
   "BasePath": "_content/WebsiteTuVan",
   "Mode": "Default",
@@ -1338,6 +1338,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\questions\\4ac30844-c053-4c92-a150-7704d8293685_Screenshot 2025-04-01 172133.png"
+    },
+    {
+      "Identity": "D:\\University\\Lập trình web nâng cao\\BTLWebTuVan\\medicalAdviceWebsite\\wwwroot\\uploads\\questions\\b9ade5ed-a90f-44be-854c-2e8a920f4eff_Màn hình theo dõi cứu hộ 2.png",
+      "SourceId": "WebsiteTuVan",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\University\\Lập trình web nâng cao\\BTLWebTuVan\\medicalAdviceWebsite\\wwwroot\\",
+      "BasePath": "_content/WebsiteTuVan",
+      "RelativePath": "uploads/questions/b9ade5ed-a90f-44be-854c-2e8a920f4eff_Màn hình theo dõi cứu hộ 2#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "dzaitca6x4",
+      "Integrity": "GRXBBD51HQ9dSG+Wxy+OSmw3H2o/UH6wnU4YWugv8GE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\questions\\b9ade5ed-a90f-44be-854c-2e8a920f4eff_Màn hình theo dõi cứu hộ 2.png"
     },
     {
       "Identity": "D:\\University\\Lập trình web nâng cao\\BTLWebTuVan\\medicalAdviceWebsite\\wwwroot\\uploads\\questions\\bee165dd-9f97-4002-99d1-f5021753a623_Screenshot 2025-04-01 165527.png",
@@ -6424,6 +6445,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-mILyTPFfze5KcEd6Iu6pOGpIhakOo8a4IzkoosejI3w="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/questions/b9ade5ed-a90f-44be-854c-2e8a920f4eff_Màn hình theo dõi cứu hộ 2.dzaitca6x4.png",
+      "AssetFile": "D:\\University\\Lập trình web nâng cao\\BTLWebTuVan\\medicalAdviceWebsite\\wwwroot\\uploads\\questions\\b9ade5ed-a90f-44be-854c-2e8a920f4eff_Màn hình theo dõi cứu hộ 2.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "107253"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"GRXBBD51HQ9dSG+Wxy+OSmw3H2o/UH6wnU4YWugv8GE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 06:54:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dzaitca6x4"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/questions/b9ade5ed-a90f-44be-854c-2e8a920f4eff_Màn hình theo dõi cứu hộ 2.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-GRXBBD51HQ9dSG+Wxy+OSmw3H2o/UH6wnU4YWugv8GE="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/questions/b9ade5ed-a90f-44be-854c-2e8a920f4eff_Màn hình theo dõi cứu hộ 2.png",
+      "AssetFile": "D:\\University\\Lập trình web nâng cao\\BTLWebTuVan\\medicalAdviceWebsite\\wwwroot\\uploads\\questions\\b9ade5ed-a90f-44be-854c-2e8a920f4eff_Màn hình theo dõi cứu hộ 2.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "107253"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"GRXBBD51HQ9dSG+Wxy+OSmw3H2o/UH6wnU4YWugv8GE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 06:54:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-GRXBBD51HQ9dSG+Wxy+OSmw3H2o/UH6wnU4YWugv8GE="
         }
       ]
     },

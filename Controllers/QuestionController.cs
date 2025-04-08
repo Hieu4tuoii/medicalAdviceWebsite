@@ -12,6 +12,7 @@ namespace WebsiteTuVan.Controllers
         private readonly ICategoriesRepository _categoryRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ApplicationDbContext _context;
+        //private readonly UserManager<User> _userManager;
         // Gi?i h?n c?u hình
         private const int MaxAttachmentCount = 4;
         private readonly long _maxFileSize = 5 * 1024 * 1024; // 5 MB
@@ -23,11 +24,45 @@ namespace WebsiteTuVan.Controllers
             _categoryRepository = categoryRepository;
             _webHostEnvironment = webHostEnvironment;
             _context = context;
+            //_userManager = userManager;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
         {
-            var questions = await _repository.GetAllAsync();
-            return View(questions);
+            // 1. Lấy ID người dùng hiện tại
+            //var userIdString = _userManager.GetUserId(User);
+            //if (!int.TryParse(userIdString, out int patientId))
+            //{
+            //    // Xử lý lỗi nếu không lấy được hoặc không parse được ID
+            //    return Unauthorized("Không thể xác định người dùng."); // Hoặc trang lỗi khác
+            //}
+            int patientId = 1;
+            // 2. Lấy tất cả câu hỏi của người dùng từ Repository
+            var allUserQuestions = await _repository.GetByPatientIdAsync(patientId);
+
+            // 3. Thực hiện phân trang thủ công
+            var totalItems = allUserQuestions.Count();
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            // Đảm bảo pageNumber hợp lệ
+            pageNumber = Math.Max(1, Math.Min(pageNumber, totalPages));
+
+            var pagedQuestions = allUserQuestions
+                                    .Skip((pageNumber - 1) * pageSize)
+                                    .Take(pageSize)
+                                    .ToList();
+
+            // 4. Tạo ViewModel
+            var viewModel = new QuestionListViewModel
+            {
+                Questions = pagedQuestions,
+                CurrentPage = pageNumber,
+                PageSize = pageSize,
+                TotalCount = totalItems,
+                TotalPages = totalPages
+            };
+
+            // 5. Trả về View với ViewModel
+            return View(viewModel);
         }
 
         // [Authorize] // Đảm bảo người dùng đã đăng nhập
@@ -141,7 +176,7 @@ namespace WebsiteTuVan.Controllers
                         }
                         catch (Exception ex)
                         {
-                            ModelState.AddModelError("", $"L?i khi t?i lên file '{file.FileName}'. Vui lòng th? l?i.");
+                            ModelState.AddModelError("", $"Lỗi khi tải lên file '{file.FileName}'. Vui lòng thử lại.");
                             return View(viewModel); // Trả về view với lỗi
                         }
                     }
@@ -156,7 +191,7 @@ namespace WebsiteTuVan.Controllers
 
                 // --- **5. Chuyển hướng sau khi thành công** ---
                 // TempData["SuccessMessage"] = "Gửi câu hỏi và file đính kèm thành công!";
-                return RedirectToAction("Index", "Home"); 
+                return RedirectToAction("Index", "Question"); 
             }
 
             // Nếu ModelState không hợp lệ (bao gồm cả lỗi file), hiển thị lại form

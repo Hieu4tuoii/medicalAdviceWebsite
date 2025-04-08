@@ -1098,6 +1098,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\4ac30844-c053-4c92-a150-7704d8293685_Screenshot 2025-04-01 172133.png'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\b9ade5ed-a90f-44be-854c-2e8a920f4eff_Màn hình theo dõi cứu hộ 2.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteTuVan</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteTuVan</BasePath>
+      <RelativePath>uploads/questions/b9ade5ed-a90f-44be-854c-2e8a920f4eff_Màn hình theo dõi cứu hộ 2.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>dzaitca6x4</Fingerprint>
+      <Integrity>GRXBBD51HQ9dSG+Wxy+OSmw3H2o/UH6wnU4YWugv8GE=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\b9ade5ed-a90f-44be-854c-2e8a920f4eff_Màn hình theo dõi cứu hộ 2.png'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\bee165dd-9f97-4002-99d1-f5021753a623_Screenshot 2025-04-01 165527.png'))">
       <SourceType>Package</SourceType>
       <SourceId>WebsiteTuVan</SourceId>
