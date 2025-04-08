@@ -1,0 +1,133 @@
+﻿@model WebsiteTuVan.Models.CreateQuestionViewModel
+@{
+
+    ViewData["Title"] = "Đặt câu hỏi";
+
+    //Layout = "_Layout";
+}
+<div class="form-container">
+    <div style="margin-bottom: 1.5rem;">
+        <h2 style="display: inline-block;">Đặt câu hỏi sức khỏe của bạn</h2>
+        <a href="#" class="instructions-link"> <i class="fas fa-info-circle"></i> Xem hướng dẫn</a>
+    </div>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken() <div class="form-group">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CategoryId" class="form-label"></label>
+            <select asp-for="CategoryId" asp-items="Model.Categories" class="form-select">
+                <option value="">-- Chọn chuyên khoa --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Content" class="form-label"></label>
+            <textarea asp-for="Content" class="form-control" rows="5" placeholder="Hãy mô tả rõ hơn về tình trạng của bạn (tuổi, triệu chứng, v.v.)"></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+
+        <div class="form-group attachment-section">
+            <label for="attachmentsInput">
+                <i class="fas fa-paperclip"></i> Thêm file đính kèm <small>(Tối đa 4 hình, chỉ Bác sĩ có thể xem)</small>
+            </label>
+            <input type="file" id="attachmentsInput" name="Attachments" multiple class="form-control" accept="image/*" />
+        </div>
+
+
+        <div class="form-group mt-4 text-center">
+            <button type="submit" class="btn btn-submit">Gửi câu hỏi</button>
+        </div>
+    </form>
+</div>
+
+<style>
+    .form-container {
+        max-width: 700px; /* Giới hạn chiều rộng form */
+        margin: 2rem auto; /* Căn giữa và tạo khoảng cách */
+        padding: 2rem;
+        background-color: #f8f9fa; /* Màu nền giống ảnh */
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Thêm bóng đổ nhẹ */
+    }
+
+    .form-label {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        display: block; /* Đảm bảo label chiếm 1 dòng */
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem; /* Tăng khoảng cách giữa các field */
+    }
+
+    .btn-submit {
+        background-color: #28a745; /* Màu xanh lá giống nút */
+        border-color: #28a745;
+        color: white;
+        padding: 0.75rem 1.5rem; /* Tăng kích thước nút */
+        font-size: 1rem;
+    }
+
+        .btn-submit:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+    .instructions-link {
+        float: right; /* Đẩy link qua phải */
+        color: #0d6efd; /* Màu link xanh dương */
+        text-decoration: none;
+    }
+
+        .instructions-link:hover {
+            text-decoration: underline;
+        }
+
+    .attachment-section {
+        border: 1px dashed #ced4da; /* Viền đứt giống ảnh */
+        padding: 1rem;
+        margin-top: 1rem;
+        text-align: center; /* Căn giữa nội dung */
+        background-color: #fff; /* Nền trắng */
+        border-radius: 5px;
+    }
+
+        .attachment-section label {
+            cursor: pointer;
+            color: #6c757d; /* Màu chữ xám */
+        }
+
+        .attachment-section input[type="file"] {
+            display: none; /* Ẩn input file gốc */
+        }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        const attachmentsInput = document.getElementById('attachmentsInput');
+        if (attachmentsInput) {
+            attachmentsInput.addEventListener('change', function(event) {
+                const files = event.target.files;
+                const maxFiles = 4;
+                if (files.length > maxFiles) {
+                    alert(`Bạn chỉ có thể chọn tối đa ${maxFiles} file.`);
+                    // Reset input file
+                    event.target.value = '';
+                    return;
+                }
+                console.log(files);
+            });
+        }
+    </script>
+}
