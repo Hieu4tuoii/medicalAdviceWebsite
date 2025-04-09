@@ -7,5 +7,6 @@ namespace WebsiteTuVan.Repositories
     {
         //danh sách các phương thức của AnswersRepository
         //...
+        Task<Answer?> GetByQuestionIdAsync(int questionId);
     }
 }

@@ -27,6 +27,8 @@ namespace WebsiteTuVan.Models{
 
         // Quan hệ với Category
         public int CategoryId { get; set; }
-        public virtual Category Category { get; set; } 
+        public virtual Category Category { get; set; }
+
+        public virtual ICollection<Answer> Answers { get; set; } = new List<Answer>();
     }
 }
