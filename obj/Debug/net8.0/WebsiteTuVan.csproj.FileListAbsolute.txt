@@ -169,3 +169,4 @@ C:\LTWNangCao\WebsiteTuVan\obj\Debug\net8.0\ref\WebsiteTuVan.dll
 C:\LTWNangCao\WebsiteTuVan\bin\Debug\net8.0\Castle.Core.dll
 C:\LTWNangCao\WebsiteTuVan\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Proxies.dll
 C:\LTWNangCao\WebsiteTuVan\obj\Debug\net8.0\WebsiteTuVan.sourcelink.json
+C:\LTWNangCao\WebsiteTuVan\bin\Debug\net8.0\BCrypt.Net-Next.dll

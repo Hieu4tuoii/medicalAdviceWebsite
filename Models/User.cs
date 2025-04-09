@@ -28,5 +28,18 @@ public class User{
 
    //created
     public DateTime CreatedAt { get; set; } = DateTime.Now; //mặc định là tg khi tạo tài khoản
+
+
+    // Hash the password
+    public void SetPassword(string password)
+    {
+        Password = BCrypt.Net.BCrypt.HashPassword(password);
+    }
+    
+    // Verify the password
+    public bool VerifyPassword(string password)
+    {
+        return BCrypt.Net.BCrypt.Verify(password, Password);
+    }
 }
 }

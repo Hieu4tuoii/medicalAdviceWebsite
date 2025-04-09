@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "pzAoRbgSrqGyvrgjJI44Nzzhj+TJ9SPwcNsZkuw27m0=",
+  "Hash": "Txi5pMhunZyZPKUkU4y+oY90qubisiqQEfU7ePmSqhs=",
   "Source": "WebsiteTuVan",
   "BasePath": "_content/WebsiteTuVan",
   "Mode": "Default",
@@ -53,6 +53,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\LTWNangCao\\WebsiteTuVan\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WebsiteTuVan.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\LTWNangCao\\WebsiteTuVan\\wwwroot\\css\\register-style.css",
+      "SourceId": "WebsiteTuVan",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\LTWNangCao\\WebsiteTuVan\\wwwroot\\",
+      "BasePath": "_content/WebsiteTuVan",
+      "RelativePath": "css/register-style.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\register-style.css"
     },
     {
       "Identity": "C:\\LTWNangCao\\WebsiteTuVan\\wwwroot\\css\\site.css",

@@ -1,0 +1,138 @@
+/* Màu chủ đạo */
+:root {
+    --primary-color: #28A745;
+    --input-border-color: #ced4da;
+    --input-bg-color: #fff;
+    --button-bg-color: #e2e6ea; /* Màu xám nhạt cho nút Đăng ký */
+    --button-text-color: #6c757d; /* Màu chữ cho nút Đăng ký */
+}
+
+body {
+    background-color: #f8f9fa; /* Màu nền nhẹ nhàng */
+}
+
+.register-container {
+    max-width: 500px; /* Giới hạn chiều rộng container */
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    margin-top: 50px;
+}
+
+/* --- Tabs --- */
+.register-tabs {
+    border-bottom: 1px solid #dee2e6; /* Đường kẻ dưới mặc định của tabs */
+    justify-content: space-around; /* Chia đều không gian */
+}
+
+.register-tabs .nav-item {
+   flex-grow: 1; /* Chia đều độ rộng cho các tab */
+   text-align: center;
+}
+
+.register-tabs .nav-link {
+    border: none; /* Bỏ border mặc định của link */
+    border-bottom: 3px solid transparent; /* Tạo khoảng trống cho border active */
+    color: #6c757d; /* Màu chữ tab không active */
+    font-weight: 500;
+    padding-bottom: 10px; /* Tăng khoảng cách dưới */
+    margin-bottom: -1px; /* Đẩy border lên trùng với border của container tab */
+    width: 100%; /* Cho link chiếm hết chiều rộng li */
+}
+
+.register-tabs .nav-link.active {
+    color: var(--primary-color); /* Màu chữ tab active */
+    border-bottom: 3px solid var(--primary-color); /* Border màu chủ đạo cho tab active */
+    background-color: transparent !important; /* Bỏ nền active mặc định */
+}
+
+.register-tabs .nav-link:hover {
+    border-color: transparent; /* Bỏ hover border mặc định */
+     color: #495057;
+}
+.register-tabs .nav-link.active:hover {
+    border-bottom-color: var(--primary-color); /* Giữ border xanh khi hover tab active */
+    color: var(--primary-color);
+}
+
+/* --- Form --- */
+.form-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.3rem;
+}
+
+.form-control {
+    border: 1px solid var(--input-border-color);
+    padding: 0.75rem 1rem; /* Tăng padding cho input */
+    background-color: var(--input-bg-color);
+    height: calc(1.5em + 1.5rem + 2px); /* Tính toán chiều cao nhất quán */
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25); /* Shadow focus màu xanh lá */
+}
+
+.input-group-text {
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--input-border-color);
+    border-left: none; /* Bỏ border trái cho text group */
+    font-size: 0.8rem;
+}
+.input-group .form-control {
+    border-right: none; /* Bỏ border phải cho input khi có text group bên phải */
+}
+.input-group .form-control:focus {
+     /* Đảm bảo border đồng nhất khi focus */
+     border-right: none;
+}
+
+.input-group .password-toggle {
+    cursor: pointer;
+    border-left: none;
+}
+.input-group .password-toggle i {
+    color: #6c757d;
+}
+
+
+/* --- Nút Đăng Ký --- */
+.btn-register {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+}
+
+.btn-register:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* --- Điều khoản --- */
+.terms {
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.terms a {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+.terms a:hover {
+    text-decoration: underline !important;
+}
+
+/* --- Responsive điều chỉnh nếu cần --- */
+@media (max-width: 576px) {
+    .register-container {
+        margin-top: 20px;
+        padding: 20px;
+    }
+     .register-tabs .nav-link {
+        font-size: 0.9rem; /* Giảm cỡ chữ tab trên mobile */
+     }
+}

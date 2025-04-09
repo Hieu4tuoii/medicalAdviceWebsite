@@ -43,7 +43,7 @@
                                     <span class="fw-bold text-dark">HOTLINE: 0912.345.678</span>
                                 </a>
                             </div>
-                            <a asp-controller="Question" asp-action="Ask" class="btn btn-ask">
+                            <a href="/Question/Ask" class="btn btn-ask">
                                 <i class="fa-solid fa-user-doctor me-1"></i> @* Reduced margin *@
                                 HỎI BÁC SĨ NGAY
                             </a>
@@ -65,38 +65,50 @@
                 <div class="collapse navbar-collapse" id="mainNavbarContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link px-3 active" aria-current="page" asp-area="" asp-controller="Home" asp-action="Index">TRANG CHỦ</a> @* Adjusted padding px-3 *@
+                            <a class="nav-link px-3 active" aria-current="page" href="/Home/Index">TRANG CHỦ</a> @* Adjusted padding px-3 *@
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3" asp-area="" asp-controller="Question" asp-action="Ask">ĐẶT CÂU HỎI</a>
+                            <a class="nav-link px-3" href="/Question/Ask">ĐẶT CÂU HỎI</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link px-3 dropdown-toggle" href="#" id="navbarDropdownDoctors" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 ĐỘI NGŨ BÁC SĨ
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownDoctors">
-                                <li><a class="dropdown-item" href="#">Danh sách bác sĩ</a></li>
-                                <li><a class="dropdown-item" href="#">Chuyên khoa</a></li>
+                                <li><a class="dropdown-item" href="/Doctor/List">Danh sách bác sĩ</a></li>
+                                <li><a class="dropdown-item" href="/Doctor/Specialties">Chuyên khoa</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3" asp-area="" asp-controller="Question" asp-action="MyQuestions">CÂU HỎI CỦA TÔI</a>
+                            <a class="nav-link px-3" href="/Question/MyQuestions">CÂU HỎI CỦA TÔI</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link px-3" asp-area="" asp-controller="Article" asp-action="Index">BÀI VIẾT</a>
+                            <a class="nav-link px-3" href="/Article/Index">BÀI VIẾT</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3" asp-area="" asp-controller="Question" asp-action="Public">CÂU HỎI CÔNG KHAI</a>
+                            <a class="nav-link px-3" href="/Question/Public">CÂU HỎI CÔNG KHAI</a>
                         </li>
                     </ul>
                     @* --- Login/Register --- *@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                         <li class="nav-item">
-                            <a class="nav-link px-3" asp-area="" asp-controller="Account" asp-action="Login">ĐĂNG NHẬP</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-3" asp-area="" asp-controller="Account" asp-action="Register">ĐĂNG KÝ</a>
-                        </li>
+                        @if (Context.Session.GetString("Email") != null)
+                        {
+                            <li class="nav-item dropdown"></li>
+                                <a class="nav-link px-3 dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>@Context.Session.GetString("Name")</span>
+                                    <i class="fas fa-user-circle me-1"></i> @Context.Session.GetString("UserName")
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item" href="/User/Logout">Đăng xuất</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="/User/Login">ĐĂNG NHẬP</a>
+                            </li>
+                        }
                     </ul>
                      @* --- Mobile Specific Elements (Optional: Can add Hotline/Ask links inside collapsed menu too) --- *@
                      <div class="d-lg-none border-top mt-3 pt-3">

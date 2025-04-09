@@ -9,6 +9,15 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Cấu hình Session
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Thời gian timeout của session
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 //dki repository
 builder.Services.AddScoped<IAnswersRepository, AnswersRepository>();
 builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
@@ -33,6 +42,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession(); // Kích hoạt middleware Session
 
 app.UseAuthorization();
 

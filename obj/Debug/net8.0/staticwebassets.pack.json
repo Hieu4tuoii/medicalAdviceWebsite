@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\WebsiteTuVan.bundle.scp.css"
     },
     {
+      "Id": "C:\\LTWNangCao\\WebsiteTuVan\\wwwroot\\css\\register-style.css",
+      "PackagePath": "staticwebassets\\css\\register-style.css"
+    },
+    {
       "Id": "C:\\LTWNangCao\\WebsiteTuVan\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
