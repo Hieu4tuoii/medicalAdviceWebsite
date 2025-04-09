@@ -50,7 +50,7 @@ namespace WebsiteTuVan.Controllers
                 //lưu người dùng vào cơ sở dữ liệu
                 await _repository.saveUserAsync(user);
                 //sau khi lưu thi chuyển hướng về trang đăng nhập
-                return RedirectToAction("Login", "Auth");
+                return RedirectToAction("Login", "User");
             }
             //nếu dữ liệu không hợp lệ thì trả về view
             return View(model);

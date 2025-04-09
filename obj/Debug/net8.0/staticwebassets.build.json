@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "g1F+xXwno/wW/asRzB/44t9YPI3rj+5WpWT0nMpA7qQ=",
+  "Hash": "AkaM4tglStLESsIcDAtIQpM8EWkFanUZnUoGPMh/8AA=",
   "Source": "WebsiteTuVan",
   "BasePath": "_content/WebsiteTuVan",
   "Mode": "Default",
@@ -1250,6 +1250,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\questions\\4c145efe-26d6-40a8-89d0-e54766638b6d_Screenshot 2025-03-03 000525.png"
+    },
+    {
+      "Identity": "C:\\LTWNangCao\\medicalAdviceWebsite\\wwwroot\\uploads\\questions\\79f43d76-08cc-4b45-8a0f-e85b9a2c959d_Screenshot 2025-03-03 000525.png",
+      "SourceId": "WebsiteTuVan",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\LTWNangCao\\medicalAdviceWebsite\\wwwroot\\",
+      "BasePath": "_content/WebsiteTuVan",
+      "RelativePath": "uploads/questions/79f43d76-08cc-4b45-8a0f-e85b9a2c959d_Screenshot 2025-03-03 000525.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\questions\\79f43d76-08cc-4b45-8a0f-e85b9a2c959d_Screenshot 2025-03-03 000525.png"
     },
     {
       "Identity": "C:\\LTWNangCao\\medicalAdviceWebsite\\wwwroot\\uploads\\questions\\b9ade5ed-a90f-44be-854c-2e8a920f4eff_Màn hình theo dõi cứu hộ 2.png",
