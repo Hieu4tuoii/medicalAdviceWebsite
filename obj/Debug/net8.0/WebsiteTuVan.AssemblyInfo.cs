@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebsiteTuVan")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+22465b49dbcca0c1228a5932ca4e27ad454d1cef")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9d9c4bd71bb3f15d5239d865ec1500da634f7f15")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebsiteTuVan")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebsiteTuVan")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

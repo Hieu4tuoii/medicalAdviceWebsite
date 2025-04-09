@@ -12,18 +12,20 @@ namespace WebsiteTuVan.Controllers
         private readonly ICategoriesRepository _categoryRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ApplicationDbContext _context;
+        private readonly IAnswersRepository _answersRepository;
         //private readonly UserManager<User> _userManager;
         // Gi?i h?n c?u hình
         private const int MaxAttachmentCount = 4;
         private readonly long _maxFileSize = 5 * 1024 * 1024; // 5 MB
         private readonly string[] _allowedExtensions = { ".jpg", ".jpeg", ".png", ".gif" }; // Ch? cho phép ?nh
 
-        public QuestionController(IQuestionsRepository repository, ICategoriesRepository categoryRepository, IWebHostEnvironment webHostEnvironment, ApplicationDbContext context)
+        public QuestionController(IQuestionsRepository repository, ICategoriesRepository categoryRepository, IWebHostEnvironment webHostEnvironment, ApplicationDbContext context, IAnswersRepository answersRepository)
         {
             _repository = repository;
             _categoryRepository = categoryRepository;
             _webHostEnvironment = webHostEnvironment;
             _context = context;
+            _answersRepository = answersRepository;
             //_userManager = userManager;
         }
         public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
@@ -210,5 +212,77 @@ namespace WebsiteTuVan.Controllers
                                        }).ToList();
             }
         }
+
+        // --- Action Details ---
+        [HttpGet]
+        // Route có thể là "/cau-hoi/{id}/{slug?}" nếu muốn URL thân thiện
+        public async Task<IActionResult> Details(int id)
+        {
+            // 1. Lấy chi tiết câu hỏi chính
+            var question = await _repository.GetDetailsByIdAsync(id);
+            if (question == null)
+            {
+                return NotFound(); // Không tìm thấy câu hỏi
+            }
+
+            // (Tùy chọn) Kiểm tra quyền truy cập:
+            // var currentUserId = _userManager.GetUserId(User);
+            // if (question.Status == "pending" && question.PatientId.ToString() != currentUserId)
+            // {
+            //     // Nếu câu hỏi đang chờ mà không phải của user hiện tại -> không cho xem
+            //     return Forbid(); // Hoặc NotFound()
+            // }
+
+            // 2. Lấy câu trả lời (nếu có)
+            Answer? answer = null;
+            if (question.Status == "answered") // Chỉ lấy câu trả lời nếu status là answered
+            {
+                answer = await _answersRepository.GetByQuestionIdAsync(id);
+            }
+
+            // 3. Lấy các câu hỏi liên quan (đã công khai)
+            int relatedQuestionsCount = 6; // Số lượng câu hỏi liên quan muốn hiển thị
+            var relatedQuestionsData = await _repository.GetPublicAnsweredQuestionsAsync(question.CategoryId, id, relatedQuestionsCount);
+
+            // 4. Chuẩn bị ViewModel
+            var viewModel = new QuestionDetailViewModel
+            {
+                Question = question,
+                Answer = answer,
+                AnsweringDoctor = answer?.Doctor, // Lấy Doctor từ Answer (nếu answer không null)
+                DoctorUser = answer?.Doctor?.User // Lấy User từ Doctor (nếu answer và doctor không null)
+            };
+
+            // Xử lý mapping cho danh sách câu hỏi liên quan
+            foreach (var relatedQ in relatedQuestionsData)
+            {
+                // Cần lấy thông tin bác sĩ trả lời cho câu hỏi liên quan này
+                // Cách lấy tùy thuộc vào cấu trúc DB và dữ liệu đã Include ở bước 3
+                // Giả định là đã Include Answer -> Doctor -> User cho relatedQ
+                var relatedAnswerDoctor = relatedQ.Answers?.FirstOrDefault()?.Doctor; // Lấy bác sĩ từ câu trả lời đầu tiên (nếu có)
+                var relatedDoctorUser = relatedAnswerDoctor?.User;
+                int? experienceYears = null;
+                if (relatedAnswerDoctor != null)
+                {
+                    // Tính số năm kinh nghiệm, xử lý nếu YearOfStartingWork = 0 hoặc không hợp lệ
+                    if (relatedAnswerDoctor.YearOfStartingWork > 1900 && relatedAnswerDoctor.YearOfStartingWork <= DateTime.Now.Year)
+                    {
+                        experienceYears = DateTime.Now.Year - relatedAnswerDoctor.YearOfStartingWork;
+                    }
+                }
+
+                viewModel.RelatedQuestions.Add(new RelatedQuestionInfo(
+                    relatedQ.Id,
+                    relatedQ.Title,
+                    relatedDoctorUser?.Name, // Lấy tên bác sĩ (có thể null)
+                    experienceYears // Số năm kinh nghiệm (có thể null)
+                ));
+            }
+
+
+            // 5. Trả về View với ViewModel
+            return View(viewModel);
+        }
+
     }
 }

@@ -1,0 +1,206 @@
+﻿@model WebsiteTuVan.Models.QuestionDetailViewModel
+@{
+    // Lấy tiêu đề câu hỏi làm tiêu đề trang
+    ViewData["Title"] = Model.Question.Title ?? "Chi tiết câu hỏi";
+}
+
+<div class="question-detail-container">
+
+    <h1 class="mb-4">@Model.Question.Title</h1>
+
+    <div class="question-section">
+        <span class="section-label">Câu hỏi:</span>
+        <div class="question-content">
+            @Html.Raw(Model.Question.Content.Replace("\n", "<br />")) @* Hiển thị nội dung, thay \n bằng <br> *@
+        </div>
+        @* Hiển thị thêm thông tin người hỏi nếu cần: *@
+        @* <div class="text-muted small mt-2">Hỏi bởi: @Model.Question.Patient?.Name - @Model.Question.CreatedAt.ToString("dd/MM/yyyy")</div> *@
+    </div>
+
+    <div class="answer-section">
+        <span class="section-label">Trả lời:</span>
+        @if (Model.Answer != null && Model.AnsweringDoctor != null && Model.DoctorUser != null)
+        {
+            <div class="doctor-info">
+                <div class="doctor-avatar">
+                    <img src="/images/avatar-placeholder.png" alt="Ảnh đại diện bác sĩ">
+                </div>
+                <div>
+                    <div class="doctor-name">@Model.DoctorUser.Name</div>
+                    @* Hiển thị thêm chuyên khoa nếu cần: *@
+                    @* <div class="doctor-specialization text-muted small">@Model.AnsweringDoctor.Specialization</div> *@
+                </div>
+            </div>
+            <div class="answer-content">
+                @Html.Raw(Model.Answer.Content.Replace("\n", "<br />"))
+            </div>
+            <div class="text-muted small mt-2">Trả lời ngày: @Model.Answer.CreatedAt.ToString("dd/MM/yyyy")</div>
+        }
+        else if (Model.Question.Status == "pending")
+        {
+            <div class="pending-message">
+                Câu hỏi của bạn đang chờ phê duyệt và sẽ được gửi tới bác sĩ trong thời gian sớm nhất.
+            </div>
+        }
+        else
+        {
+            <div class="pending-message">
+                Chưa có câu trả lời cho câu hỏi này.
+            </div>
+        }
+    </div>
+
+    @if (Model.RelatedQuestions.Any())
+    {
+        <div class="related-questions-section">
+            <h3 class="related-questions-title">Câu hỏi liên quan</h3>
+            <div class="row">
+                @foreach (var relatedQ in Model.RelatedQuestions)
+                {
+                    <div class="col-md-4 mb-3">
+                        <a asp-action="Details" asp-controller="Question" asp-route-id="@relatedQ.Id">
+                            <div class="related-question-card">
+                                <div class="placeholder-img">(Ảnh đại diện)</div> <div class="card-body p-0">
+                                    <h5 class="card-title" title="@relatedQ.Title">@relatedQ.Title</h5>
+                                    @if (!string.IsNullOrEmpty(relatedQ.DoctorName))
+                                    {
+                                        <p class="card-text mb-1">Được trả lời bởi: <strong>@relatedQ.DoctorName</strong></p>
+                                    }
+                                    @if (relatedQ.DoctorExperienceYears.HasValue)
+                                    {
+                                        <p class="card-text">@relatedQ.DoctorExperienceYears năm kinh nghiệm</p>
+                                    }
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+            <a href="@Url.Action("PublicIndex", "Question")" class="btn btn-outline-primary see-more-btn">Xem thêm</a>
+        </div>
+    }
+
+</div>
+
+<style>
+    /* Thêm CSS tùy chỉnh để giống hình ảnh */
+    .question-detail-container {
+        max-width: 900px; /* Hoặc giới hạn chiều rộng phù hợp */
+        margin: 2rem auto;
+    }
+
+    .question-section, .answer-section {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background-color: #f8f9fa; /* Nền xám nhạt */
+        border-radius: 5px;
+    }
+
+    .section-label {
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #333;
+        margin-bottom: 0.75rem;
+        display: block;
+    }
+
+    .question-content, .answer-content {
+        line-height: 1.7;
+        color: #555;
+    }
+
+    .doctor-info {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .doctor-avatar img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 1rem;
+        object-fit: cover; /* Đảm bảo ảnh không bị méo */
+        background-color: #ccc; /* Màu nền placeholder */
+    }
+
+    .doctor-name {
+        font-weight: bold;
+        color: #0056b3; /* Màu tên bác sĩ */
+    }
+
+    .related-questions-section {
+        margin-top: 3rem;
+    }
+
+    .related-questions-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        color: #444;
+    }
+
+    .related-question-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        background-color: #fff;
+        height: 100%; /* Để các card cao bằng nhau */
+        display: flex;
+        flex-direction: column;
+    }
+
+        .related-question-card .placeholder-img {
+            width: 100%;
+            height: 150px; /* Chiều cao cố định cho ảnh placeholder */
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #adb5bd;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .related-question-card .card-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            /* Giới hạn 2 dòng cho tiêu đề */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: 2.4em; /* Đảm bảo chiều cao tối thiểu cho 2 dòng */
+        }
+
+        .related-question-card .card-text {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-bottom: 0.25rem;
+        }
+
+        .related-question-card a {
+            text-decoration: none;
+            color: inherit; /* Kế thừa màu chữ */
+        }
+
+    .see-more-btn {
+        display: block;
+        width: fit-content;
+        margin: 2rem auto 0;
+    }
+
+    .pending-message {
+        font-style: italic;
+        color: #6c757d;
+    }
+
+</style>
+
