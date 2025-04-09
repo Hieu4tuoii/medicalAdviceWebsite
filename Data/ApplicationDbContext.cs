@@ -16,6 +16,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Doctor> Doctors { get; set; }
     public DbSet<Article> Articles { get; set; }
     public DbSet<Comment> Comments { get; set; }
+    public DbSet<Attachment> Attachments { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
  {
             optionsBuilder.UseLazyLoadingProxies(); // 🔥 Bật Lazy Loading

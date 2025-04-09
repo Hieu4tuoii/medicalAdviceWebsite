@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\LTWNangCao\\WebsiteTuVan\\WebsiteTuVan.csproj": {}
+    "C:\\LTWNangCao\\medicalAdviceWebsite\\WebsiteTuVan.csproj": {}
   },
   "projects": {
-    "C:\\LTWNangCao\\WebsiteTuVan\\WebsiteTuVan.csproj": {
+    "C:\\LTWNangCao\\medicalAdviceWebsite\\WebsiteTuVan.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\LTWNangCao\\WebsiteTuVan\\WebsiteTuVan.csproj",
+        "projectUniqueName": "C:\\LTWNangCao\\medicalAdviceWebsite\\WebsiteTuVan.csproj",
         "projectName": "WebsiteTuVan",
-        "projectPath": "C:\\LTWNangCao\\WebsiteTuVan\\WebsiteTuVan.csproj",
+        "projectPath": "C:\\LTWNangCao\\medicalAdviceWebsite\\WebsiteTuVan.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\LTWNangCao\\WebsiteTuVan\\obj\\",
+        "outputPath": "C:\\LTWNangCao\\medicalAdviceWebsite\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",

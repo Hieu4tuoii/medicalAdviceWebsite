@@ -68,7 +68,9 @@
                             <a class="nav-link px-3 active" aria-current="page" href="/Home/Index">TRANG CHỦ</a> @* Adjusted padding px-3 *@
                         </li>
                         <li class="nav-item">
+
                             <a class="nav-link px-3" href="/Question/Ask">ĐẶT CÂU HỎI</a>
+
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link px-3 dropdown-toggle" href="#" id="navbarDropdownDoctors" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -80,7 +82,10 @@
                             </ul>
                         </li>
                         <li class="nav-item">
+
                             <a class="nav-link px-3" href="/Question/MyQuestions">CÂU HỎI CỦA TÔI</a>
+
+                           
                         </li>
                          <li class="nav-item">
                             <a class="nav-link px-3" href="/Article/Index">BÀI VIẾT</a>
@@ -93,7 +98,7 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         @if (Context.Session.GetString("Email") != null)
                         {
-                            <li class="nav-item dropdown"></li>
+                            <li class="nav-item dropdown">
                                 <a class="nav-link px-3 dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span>@Context.Session.GetString("Name")</span>
                                     <i class="fas fa-user-circle me-1"></i> @Context.Session.GetString("UserName")

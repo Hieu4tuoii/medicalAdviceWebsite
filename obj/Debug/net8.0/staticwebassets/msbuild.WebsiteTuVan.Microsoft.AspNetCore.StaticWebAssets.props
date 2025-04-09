@@ -976,6 +976,118 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\lib\jquery\LICENSE.txt))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\4ac30844-c053-4c92-a150-7704d8293685_Screenshot 2025-04-01 172133.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteTuVan</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteTuVan</BasePath>
+      <RelativePath>uploads/questions/4ac30844-c053-4c92-a150-7704d8293685_Screenshot 2025-04-01 172133.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\4ac30844-c053-4c92-a150-7704d8293685_Screenshot 2025-04-01 172133.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\4c145efe-26d6-40a8-89d0-e54766638b6d_Screenshot 2025-03-03 000525.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteTuVan</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteTuVan</BasePath>
+      <RelativePath>uploads/questions/4c145efe-26d6-40a8-89d0-e54766638b6d_Screenshot 2025-03-03 000525.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\4c145efe-26d6-40a8-89d0-e54766638b6d_Screenshot 2025-03-03 000525.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\b9ade5ed-a90f-44be-854c-2e8a920f4eff_Màn hình theo dõi cứu hộ 2.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteTuVan</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteTuVan</BasePath>
+      <RelativePath>uploads/questions/b9ade5ed-a90f-44be-854c-2e8a920f4eff_Màn hình theo dõi cứu hộ 2.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\b9ade5ed-a90f-44be-854c-2e8a920f4eff_Màn hình theo dõi cứu hộ 2.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\bee165dd-9f97-4002-99d1-f5021753a623_Screenshot 2025-04-01 165527.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteTuVan</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteTuVan</BasePath>
+      <RelativePath>uploads/questions/bee165dd-9f97-4002-99d1-f5021753a623_Screenshot 2025-04-01 165527.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\bee165dd-9f97-4002-99d1-f5021753a623_Screenshot 2025-04-01 165527.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\cdd7f3d8-47e7-43fa-b31e-818dcdbdd28d_Screenshot 2025-04-01 172515.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteTuVan</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteTuVan</BasePath>
+      <RelativePath>uploads/questions/cdd7f3d8-47e7-43fa-b31e-818dcdbdd28d_Screenshot 2025-04-01 172515.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\cdd7f3d8-47e7-43fa-b31e-818dcdbdd28d_Screenshot 2025-04-01 172515.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\d8338e6c-032b-4113-a164-b8a599b20386_Đặt câu hỏi.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteTuVan</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteTuVan</BasePath>
+      <RelativePath>uploads/questions/d8338e6c-032b-4113-a164-b8a599b20386_Đặt câu hỏi.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\d8338e6c-032b-4113-a164-b8a599b20386_Đặt câu hỏi.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\fc479fea-bd0f-4610-bc66-b7382fa07358_Screenshot 2025-04-01 172146.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebsiteTuVan</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebsiteTuVan</BasePath>
+      <RelativePath>uploads/questions/fc479fea-bd0f-4610-bc66-b7382fa07358_Screenshot 2025-04-01 172146.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\questions\fc479fea-bd0f-4610-bc66-b7382fa07358_Screenshot 2025-04-01 172146.png))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\WebsiteTuVan.bundle.scp.css))">
       <SourceType>Package</SourceType>
       <SourceId>WebsiteTuVan</SourceId>

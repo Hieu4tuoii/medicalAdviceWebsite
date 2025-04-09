@@ -1,29 +1,203 @@
-@model IEnumerable<WebsiteTuVan.Models.Question>
-
+@model WebsiteTuVan.Models.QuestionListViewModel
 @{
     ViewData["Title"] = "Danh sách câu hỏi";
+
+    // Hàm helper để lấy class CSS cho status badge
+    string GetStatusBadgeClass(string status)
+    {
+        switch (status?.ToLower()) // Thêm ?. để tránh lỗi null
+        {
+            case "pending":
+                return "bg-warning text-dark"; // Màu vàng cho "pending"
+            case "answered":
+                return "bg-success"; // Màu xanh cho "answered"
+                                     // Thêm các status khác nếu có
+            default:
+                return "bg-secondary"; // Màu xám mặc định
+        }
+    }
+
+    // Hàm helper để lấy text hiển thị cho status
+    string GetStatusText(string status)
+    {
+        switch (status?.ToLower())
+        {
+            case "pending":
+                return "Đang chờ duyệt";
+            case "answered":
+                return "Đã trả lời";
+            // Thêm các status khác nếu có
+            default:
+                return status ?? "Không xác định"; // Hiển thị status gốc nếu không khớp
+        }
+    }
 }
 
-<h1>Danh sách câu hỏi</h1>
+<div class="container mt-4">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
 
-<div class="row">
-    @if (Model != null && Model.Any())
+    @if (Model.Questions.Any())
     {
-        @foreach (var question in Model)
+        @foreach (var question in Model.Questions)
         {
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">@question.Title</h5>
-                        <p class="card-text">@question.Content</p>
-                        <a asp-action="Details" asp-route-id="@question.Id" class="btn btn-primary">Xem chi tiết</a>
+            <a asp-action="Details" asp-controller="Question" asp-route-id="@question.Id" class="text-decoration-none">
+                <div class="question-item">
+                    <div class="question-header">
+                        <div class="question-status-title">
+                            <span class="question-status">
+                                <span class="badge @GetStatusBadgeClass(question.Status)">
+                                    @GetStatusText(question.Status)
+                                </span>
+                            </span>
+                            <span class="question-title" title="@question.Title"> @question.Title  </span>
+                        </div>
+                        <span class="question-date">
+                            @question.CreatedAt.ToString("dd/MM/yyyy")
+                        </span>
+                    </div>
+                    <div class="question-content">
+                        @question.Content
                     </div>
                 </div>
+            </a>
+        }
+
+        @if (Model.TotalPages > 1)
+        {
+            <div class="pagination-container">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
+                            <a class="page-link" asp-action="Index"
+                               asp-route-pageNumber="@(Model.CurrentPage - 1)"
+                               asp-route-pageSize="@Model.PageSize" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        @for (int i = 1; i <= Model.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                <a class="page-link" asp-action="Index"
+                                   asp-route-pageNumber="@i"
+                                   asp-route-pageSize="@Model.PageSize">@i</a>
+                            </li>
+                        }
+                        <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+                            <a class="page-link" asp-action="Index"
+                               asp-route-pageNumber="@(Model.CurrentPage + 1)"
+                               asp-route-pageSize="@Model.PageSize" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         }
     }
     else
     {
-        <p>Không có câu hỏi nào.</p>
+        <div class="alert alert-info" role="alert">
+            Bạn chưa đặt câu hỏi nào. <a asp-action="Create" asp-controller="Question">Đặt câu hỏi mới tại đây</a>.
+        </div>
     }
 </div>
+
+<style>
+    .question-item {
+        border: 1px solid #e0e0e0;
+        padding: 1.25rem; /* Tăng padding */
+        margin-bottom: 1rem;
+        background-color: #fff;
+        border-radius: 5px;
+        transition: box-shadow 0.2s ease-in-out;
+    }
+
+        .question-item:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+    .question-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        font-size: 0.9em;
+    }
+
+    .question-status-title {
+        display: flex; /* Đặt status và title trên cùng hàng */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        flex-grow: 1; /* Cho phép nhóm này chiếm không gian còn lại */
+        margin-right: 1rem; /* Tạo khoảng cách với ngày */
+    }
+    .question-status .badge {
+        font-size: 0.85em;
+        padding: 0.4em 0.7em;
+        margin-right: 0.75rem;
+    }
+
+    .question-title {
+        font-weight: 600; /* Làm đậm tiêu đề */
+        color: #343a40;
+        /* Ngăn tiêu đề quá dài làm vỡ layout */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 400px; /* Giới hạn chiều rộng tối đa của tiêu đề, tùy chỉnh nếu cần */
+    }
+    .question-date {
+        color: #6c757d; /* Màu xám cho ngày */
+        white-space: nowrap;
+    }
+
+    .question-content {
+        color: #495057;
+        line-height: 1.6; /* Tăng khoảng cách dòng */
+        /* Tùy chọn: Giới hạn số dòng và thêm dấu ... */
+        /* display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis; */
+    }
+
+    .pagination-container {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+    }
+
+    .pagination .page-item.disabled .page-link {
+        color: #adb5bd;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #0d6efd; /* Màu xanh dương cho trang hiện tại */
+        border-color: #0d6efd;
+        color: white;
+    }
+
+</style>
+@* <h1>Danh sách câu hỏi</h1> *@
+
+@* <div class="row"> *@
+@*     @if (Model != null && Model.Any()) *@
+@*     { *@
+@*         @foreach (var question in Model) *@
+@*         { *@
+@*             <div class="col-md-4 mb-4"> *@
+@*                 <div class="card"> *@
+@*                     <div class="card-body"> *@
+@*                         <h5 class="card-title">@question.Title</h5> *@
+@*                         <p class="card-text">@question.Content</p> *@
+@*                         <a asp-action="Details" asp-route-id="@question.Id" class="btn btn-primary">Xem chi tiết</a> *@
+@*                     </div> *@
+@*                 </div> *@
+@*             </div> *@
+@*         } *@
+@*     } *@
+@*     else *@
+@*     { *@
+@*         <p>Không có câu hỏi nào.</p> *@
+@*     } *@
+@* </div> *@
