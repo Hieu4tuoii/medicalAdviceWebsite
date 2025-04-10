@@ -2,7 +2,7 @@
 using WebsiteTuVan.Repositories;
 using WebsiteTuVan.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using WebsiteTuVan.Data; // Add this for Question model
+using WebsiteTuVan.Data;
 
 namespace WebsiteTuVan.Controllers
 {
@@ -13,31 +13,53 @@ namespace WebsiteTuVan.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ApplicationDbContext _context;
         private readonly IAnswersRepository _answersRepository;
+        private readonly IUsersRepository _usersRepository;
         //private readonly UserManager<User> _userManager;
         // Gi?i h?n c?u hình
         private const int MaxAttachmentCount = 4;
         private readonly long _maxFileSize = 5 * 1024 * 1024; // 5 MB
         private readonly string[] _allowedExtensions = { ".jpg", ".jpeg", ".png", ".gif" }; // Ch? cho phép ?nh
 
-        public QuestionController(IQuestionsRepository repository, ICategoriesRepository categoryRepository, IWebHostEnvironment webHostEnvironment, ApplicationDbContext context, IAnswersRepository answersRepository)
+        public QuestionController(IQuestionsRepository repository, ICategoriesRepository categoryRepository, IWebHostEnvironment webHostEnvironment, ApplicationDbContext context, IAnswersRepository answersRepository, IUsersRepository usersRepository)
         {
             _repository = repository;
             _categoryRepository = categoryRepository;
             _webHostEnvironment = webHostEnvironment;
             _context = context;
             _answersRepository = answersRepository;
+            _usersRepository = usersRepository;
             //_userManager = userManager;
         }
+
+        // --- HÀM HELPER KIỂM TRA VÀ LẤY USER TỪ SESSION ---
+        private async Task<(bool isAuthenticated, int userId, User? user)> GetCurrentUserFromSessionAsync()
+        {
+            var userEmail = HttpContext.Session.GetString("Email");
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return (false, 0, null); // Chưa đăng nhập
+            }
+
+            var user = await _usersRepository.GetUserByEmailAsync(userEmail);
+            if (user == null)
+            {
+                // Email trong Session không hợp lệ hoặc user đã bị xóa
+                HttpContext.Session.Clear(); // Xóa session cũ
+                return (false, 0, null);
+            }
+
+            return (true, user.Id, user); // Đã đăng nhập, trả về ID và User object
+        }
+        // --- KẾT THÚC HÀM HELPER ---
         public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
         {
-            // 1. Lấy ID người dùng hiện tại
-            //var userIdString = _userManager.GetUserId(User);
-            //if (!int.TryParse(userIdString, out int patientId))
-            //{
-            //    // Xử lý lỗi nếu không lấy được hoặc không parse được ID
-            //    return Unauthorized("Không thể xác định người dùng."); // Hoặc trang lỗi khác
-            //}
-            int patientId = 1;
+            // 1. Kiểm tra đăng nhập và lấy thông tin user
+            var authResult = await GetCurrentUserFromSessionAsync();
+            if (!authResult.isAuthenticated)
+            {
+                return RedirectToAction("Login", "User"); // Chuyển hướng nếu chưa đăng nhập
+            }
+            int patientId = authResult.userId;
             // 2. Lấy tất cả câu hỏi của người dùng từ Repository
             var allUserQuestions = await _repository.GetByPatientIdAsync(patientId);
 
@@ -71,6 +93,12 @@ namespace WebsiteTuVan.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            // 1. Kiểm tra đăng nhập
+            var authResult = await GetCurrentUserFromSessionAsync();
+            if (!authResult.isAuthenticated)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var viewModel = new CreateQuestionViewModel
             {
                 // Lấy danh sách chuyên khoa từ Repository và chuyển thành SelectListItem
@@ -89,6 +117,14 @@ namespace WebsiteTuVan.Controllers
         [ValidateAntiForgeryToken] // Ngăn chặn tấn công CSRF
         public async Task<IActionResult> Create(CreateQuestionViewModel viewModel /*, List<IFormFile> attachments */)
         {
+            // Kiểm tra đăng nhập và lấy thông tin user
+            var authResult = await GetCurrentUserFromSessionAsync();
+            if (!authResult.isAuthenticated)
+            {
+                // Mặc dù form không nên hiển thị nếu chưa login, kiểm tra lại ở đây cho chắc chắn
+                return RedirectToAction("Login", "User");
+            }
+            int patientId = authResult.userId;
             await LoadCategoriesIntoViewModel(viewModel);
 
             // --- **1. Validate File Attachments** ---
@@ -133,7 +169,7 @@ namespace WebsiteTuVan.Controllers
                     Title = viewModel.Title,
                     Content = viewModel.Content,
                     CategoryId = viewModel.CategoryId,
-                    PatientId = 1, // <<< --- !!! THAY BẰNG USER ID THỰC TẾ CỦA NGƯỜI DÙNG ĐANG ĐĂNG NHẬP
+                    PatientId = patientId, // <<< --- !!! THAY BẰNG USER ID THỰC TẾ CỦA NGƯỜI DÙNG ĐANG ĐĂNG NHẬP
                     Status = "pending", // Trạng thái mặc định khi mới tạo
                     CreatedAt = DateTime.Now
                 };
@@ -192,7 +228,7 @@ namespace WebsiteTuVan.Controllers
                 }
 
                 // --- **5. Chuyển hướng sau khi thành công** ---
-                // TempData["SuccessMessage"] = "Gửi câu hỏi và file đính kèm thành công!";
+                TempData["SuccessMessage"] = "Gửi câu hỏi và file đính kèm thành công!";
                 return RedirectToAction("Index", "Question"); 
             }
 
@@ -223,6 +259,20 @@ namespace WebsiteTuVan.Controllers
             if (question == null)
             {
                 return NotFound(); // Không tìm thấy câu hỏi
+            }
+
+            // 2. Kiểm tra xem người dùng có quyền xem câu hỏi này không
+            var authResult = await GetCurrentUserFromSessionAsync(); // Lấy thông tin người xem hiện tại
+
+            // Logic kiểm tra quyền: Nếu câu hỏi đang chờ duyệt (pending) thì chỉ chủ nhân câu hỏi mới được xem
+            if (question.Status == "pending")
+            {
+                if (!authResult.isAuthenticated || question.PatientId != authResult.userId)
+                {
+                    // Nếu chưa đăng nhập HOẶC đã đăng nhập nhưng không phải chủ câu hỏi -> không cho xem
+                    // return Forbid(); // Trả về 403 Forbidden
+                    return NotFound(); // Hoặc 404 để giấu sự tồn tại của câu hỏi
+                }
             }
 
             // (Tùy chọn) Kiểm tra quyền truy cập:

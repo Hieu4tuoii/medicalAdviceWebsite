@@ -30,6 +30,6 @@ namespace WebsiteTuVan.Models
 
         public long FileSize { get; set; } // Kích thước file (bytes)
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now; 
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }

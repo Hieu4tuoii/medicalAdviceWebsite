@@ -1,0 +1,242 @@
+﻿@* @model IEnumerable<WebsiteTuVan.Models.Question>  *@
+@model WebsiteTuVan.ViewModels.DoctorDashboardViewModel
+@{
+    ViewData["Title"] = "Bảng điều khiển Bác sĩ";
+    // Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+    // Hàm helper lấy text tiêu đề dựa trên filter
+    string GetListTitle(string filter)
+    {
+        switch (filter)
+        {
+            case "pending": return "Danh sách câu hỏi chưa trả lời";
+            case "answered": return "Danh sách câu hỏi đã trả lời";
+            default: return "Danh sách tất cả câu hỏi";
+        }
+    }
+}
+
+<div class="doctor-dashboard-layout container mt-4">
+
+    @* --- Sidebar --- *@
+    <aside class="doctor-sidebar">
+        <div class="doctor-info">
+            <div class="doctor-avatar-placeholder">Ảnh</div>
+            <div>Xin chào,</div>
+            <h5 class="mb-0">@Model.DoctorName</h5>
+        </div>
+        <nav class="nav flex-column doctor-filter-menu">
+            <h6 class="text-muted mb-2">Danh sách câu hỏi</h6>
+            <a class="nav-link @(Model.CurrentFilter == "all" ? "active" : "")"
+               asp-action="Dashboard" asp-controller="Doctor" asp-route-statusFilter="all">
+                Tất cả
+            </a>
+            <a class="nav-link @(Model.CurrentFilter == "pending" ? "active" : "")"
+               asp-action="Dashboard" asp-controller="Doctor" asp-route-statusFilter="pending">
+                Chưa trả lời
+            </a>
+            <a class="nav-link @(Model.CurrentFilter == "answered" ? "active" : "")"
+               asp-action="Dashboard" asp-controller="Doctor" asp-route-statusFilter="answered">
+                Đã trả lời
+            </a>
+        </nav>
+    </aside>
+
+    @* --- Main Content --- *@
+    <section class="doctor-main-content">
+        <h3 class="question-list-title">@GetListTitle(Model.CurrentFilter)</h3>
+
+        @if (!Model.Questions.Any())
+        {
+            <div class="alert alert-info">Không có câu hỏi nào phù hợp với bộ lọc này.</div>
+        }
+        else
+        {
+            @foreach (var q in Model.Questions)
+            {
+                // --- BẮT ĐẦU THAY ĐỔI ---
+                // Xác định Controller và Action dựa vào trạng thái câu hỏi
+                string targetController;
+                string targetAction;
+
+                if (q.Status == "answered") // Nếu đã trả lời -> Xem chi tiết
+                {
+                    targetController = "Question"; // Dùng QuestionController
+                    targetAction = "Details";     // Dùng action Details
+                }
+                else // Nếu đang chờ (pending) hoặc trạng thái khác -> Mở trang trả lời
+                {
+                    targetController = "Doctor";   // Dùng DoctorController
+                    targetAction = "Answer";      // Dùng action Answer
+                }
+                // --- KẾT THÚC THAY ĐỔI ---
+
+                    // Sử dụng biến đã xác định trong thẻ link
+                <a asp-action="@targetAction" asp-controller="@targetController" asp-route-id="@q.Id" class="text-decoration-none">
+                    <div class="question-item-doctor">
+                        <div class="patient-name">@q.PatientName</div>
+                        <div class="title-date">
+                            <span class="question-title" title="@q.Title">@q.Title</span>
+                            <span class="question-date">@q.CreatedAt.ToString("HH:mm dd/MM/yyyy")</span>
+                        </div>
+                        <div class="content-snippet">@q.ContentSnippet</div>
+                    </div>
+                </a>
+            }
+
+            @if (Model.TotalPages > 1)
+            {
+                <div class="pagination-container">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
+                                <a class="page-link" asp-action="Dashboard"
+                                   asp-route-statusFilter="@Model.CurrentFilter"
+                                   asp-route-pageNumber="@(Model.CurrentPage - 1)"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            @for (int i = 1; i <= Model.TotalPages; i++)
+                            {
+                                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                    <a class="page-link" asp-action="Dashboard"
+                                       asp-route-statusFilter="@Model.CurrentFilter"
+                                       asp-route-pageNumber="@i">@i</a>
+                                </li>
+                            }
+                            <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+                                <a class="page-link" asp-action="Dashboard"
+                                   asp-route-statusFilter="@Model.CurrentFilter"
+                                   asp-route-pageNumber="@(Model.CurrentPage + 1)"
+                                   aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            }
+        }
+    </section>
+
+</div>
+
+<style>
+    .doctor-dashboard-layout {
+        display: flex;
+        gap: 2rem; /* Khoảng cách giữa sidebar và content */
+    }
+
+    .doctor-sidebar {
+        flex: 0 0 250px; /* Độ rộng cố định cho sidebar */
+        background-color: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 5px;
+        height: fit-content; /* Chiều cao vừa đủ nội dung */
+    }
+
+    .doctor-info {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .doctor-avatar-placeholder {
+        width: 80px;
+        height: 80px;
+        background-color: #ced4da;
+        border-radius: 50%;
+        margin: 0 auto 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .doctor-filter-menu .nav-link {
+        color: #495057;
+        padding: 0.75rem 1rem;
+        border-radius: 0.25rem;
+        margin-bottom: 0.5rem; /* Khoảng cách giữa các mục menu */
+        transition: background-color 0.2s ease;
+    }
+
+        .doctor-filter-menu .nav-link.active {
+            background-color: #0d6efd; /* Màu xanh khi active */
+            color: white;
+            font-weight: 500;
+        }
+
+        .doctor-filter-menu .nav-link:not(.active):hover {
+            background-color: #e9ecef; /* Màu nền khi hover */
+        }
+
+    .doctor-main-content {
+        flex-grow: 1; /* Chiếm hết không gian còn lại */
+    }
+
+    .question-list-title {
+        margin-bottom: 1.5rem;
+        font-weight: bold;
+    }
+
+    .question-item-doctor {
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 1rem 1.25rem; /* padding */
+        margin-bottom: 1rem;
+        background-color: #fff;
+        transition: box-shadow 0.2s ease;
+    }
+
+        .question-item-doctor:hover {
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        .question-item-doctor .patient-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.25rem;
+            font-size: 1.05rem;
+        }
+
+        .question-item-doctor .title-date {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
+
+            .question-item-doctor .title-date .question-title {
+                font-weight: 500;
+                color: #495057; /* Màu đậm hơn ngày */
+            }
+
+        .question-item-doctor .content-snippet {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.5;
+            /* Giới hạn 2 dòng */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .question-item-doctor a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+    .pagination-container {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+    }
+
+</style>

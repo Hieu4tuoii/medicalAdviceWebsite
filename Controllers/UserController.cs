@@ -65,6 +65,12 @@ namespace WebsiteTuVan.Controllers
                 if(await _repository.AuthenticateAsync(model.Email, model.Password)){
                     //nếu đăng nhập thành công set session cho người dùng va chuyển hướng về trang chủ
                     var user = await _repository.GetUserByEmailAsync(model.Email);
+                    if (user == null)
+                    {
+                        ModelState.AddModelError("", "Đã xảy ra lỗi, vui lòng thử lại.");
+                        return View(model);
+                    }
+                    HttpContext.Session.SetInt32("UserId", user.Id);
                     HttpContext.Session.SetString("Email", user.Email.ToString());
                     HttpContext.Session.SetString("Name", user.Name.ToString());
                     HttpContext.Session.SetString("Role", user.Role.ToString());

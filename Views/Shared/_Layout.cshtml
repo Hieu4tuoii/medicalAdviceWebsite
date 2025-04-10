@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    // Lấy thông tin từ Session một cách an toàn ở đầu file
+    var userId = HttpContextAccessor.HttpContext?.Session.GetInt32("UserId"); // Lấy ID (nếu đã lưu)
+    var userName = HttpContextAccessor.HttpContext?.Session.GetString("Name");
+    var userRole = HttpContextAccessor.HttpContext?.Session.GetString("Role")?.ToLower(); // Lấy role và chuyển thành chữ thường
+    bool isAnonymous = !userId.HasValue;
+}   
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8" />
@@ -36,17 +45,21 @@
                     </div>
                     @* --- Hotline & Ask Button --- *@
                     <div class="col-lg-7 col-md-12"> @* Full width on medium *@
-                         <div class="d-flex justify-content-lg-end justify-content-center align-items-center flex-wrap gap-3"> @* Center on medium/small, end on large, add gap *@
+                        <div class="d-flex justify-content-lg-end justify-content-center align-items-center flex-wrap gap-3"> @* Center on medium/small, end on large, add gap *@
                             <div class="hotline">
                                 <a href="tel:0912345678" class="text-decoration-none">
                                     <i class="fa-solid fa-phone fa-lg me-2 icon-phone"></i>
                                     <span class="fw-bold text-dark">HOTLINE: 0912.345.678</span>
                                 </a>
                             </div>
-                            <a asp-controller="Question" asp-action="Create" class="btn btn-ask">
-                                <i class="fa-solid fa-user-doctor me-1"></i> @* Reduced margin *@
-                                HỎI BÁC SĨ NGAY
-                            </a>
+                            @* === CHỈ HIỂN THỊ NÚT "HỎI BÁC SĨ" CHO ROLE "USER" === *@
+                            @if (userRole == "user")
+                            {
+                                <a asp-controller="Question" asp-action="Create" class="btn btn-ask">
+                                    <i class="fa-solid fa-user-doctor me-1"></i> @* Reduced margin *@
+                                    HỎI BÁC SĨ NGAY
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>
@@ -67,11 +80,26 @@
                         <li class="nav-item">
                             <a class="nav-link px-3 active" aria-current="page" href="/Home/Index">TRANG CHỦ</a> @* Adjusted padding px-3 *@
                         </li>
-                        <li class="nav-item">
+                        @* === HIỂN THỊ MENU THEO ROLE === *@
 
-                            <a class="nav-link px-3" href="/Question/Ask">ĐẶT CÂU HỎI</a>
-
-                        </li>
+                        @if (userRole == "user" || isAnonymous) // Menu cho User
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link px-3" asp-controller="Question" asp-action="Create">ĐẶT CÂU HỎI</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" asp-controller="Question" asp-action="Index">CÂU HỎI CỦA TÔI</a>
+                            </li>
+                        }
+                        else if (userRole == "doctor") // Menu cho Doctor
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link px-3" asp-controller="Doctor" asp-action="Dashboard">QUẢN LÝ CÂU HỎI</a>
+                            </li>
+                            @* Thêm các link khác cho bác sĩ nếu cần *@
+                        }
+                        @* === CÁC MENU CHUNG (Hiển thị cho mọi người hoặc chỉ khi đăng nhập?) === *@
+                        @* Giả sử menu này hiển thị cho tất cả mọi người *@
                         <li class="nav-item dropdown">
                             <a class="nav-link px-3 dropdown-toggle" href="#" id="navbarDropdownDoctors" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 ĐỘI NGŨ BÁC SĨ
@@ -81,12 +109,7 @@
                                 <li><a class="dropdown-item" href="/Doctor/Specialties">Chuyên khoa</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-
-                            <a class="nav-link px-3" href="/Question/MyQuestions">CÂU HỎI CỦA TÔI</a>
-
-                           
-                        </li>
+                        
                          <li class="nav-item">
                             <a class="nav-link px-3" href="/Article/Index">BÀI VIẾT</a>
                         </li>

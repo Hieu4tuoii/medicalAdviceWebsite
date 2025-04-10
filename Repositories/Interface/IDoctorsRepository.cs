@@ -6,5 +6,6 @@ namespace WebsiteTuVan.Repositories
     {
         //danh sách các phương thức của DoctorsRepository
         //...
+        Task<Doctor?> GetDoctorByUserIdAsync(int userId);
     }
 }

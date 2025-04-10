@@ -32,22 +32,6 @@ namespace WebsiteTuVan.Repositories
 
         public async Task<List<Question>> GetPublicAnsweredQuestionsAsync(int? categoryId, int excludeQuestionId, int count)
         {
-            //var query = _dbSet
-            //    .Where(q => q.Status == "answered" && q.Id != excludeQuestionId) // Lấy câu hỏi đã trả lời, trừ câu hiện tại
-            //    .Include(q => q.Answers) // Giả sử Question có collection Answers
-            //        .ThenInclude(a => a.Doctor)
-            //            .ThenInclude(d => d.User); // Lấy thông tin bác sĩ trả lời
-
-            //if (categoryId.HasValue && categoryId > 0)
-            //{
-            //    query = query.Where(q => q.CategoryId == categoryId.Value); // Lọc theo chuyên mục nếu có
-            //}
-
-            //return await query
-            //    .OrderByDescending(q => q.CreatedAt) // Sắp xếp (có thể thay đổi logic)
-            //    .Take(count) // Giới hạn số lượng
-            //    .ToListAsync();
-            // Bắt đầu với _dbSet (IQueryable<Question>)
             var query = _dbSet.AsQueryable(); // Đảm bảo bắt đầu với IQueryable
 
             // --- BƯỚC 1: ÁP DỤNG TẤT CẢ CÁC BỘ LỌC (WHERE) TRƯỚC ---
@@ -71,6 +55,20 @@ namespace WebsiteTuVan.Repositories
                 .OrderByDescending(q => q.CreatedAt) // Hoặc logic sắp xếp khác
                 .Take(count)
                 .ToListAsync();
+        }
+        public async Task<IEnumerable<Question>> GetAllIncludingPatientAsync()
+        {
+            return await _dbSet
+                .Include(q => q.Patient) // Include thông tin người hỏi
+                .OrderByDescending(q => q.CreatedAt) // Sắp xếp mặc định
+                .ToListAsync();
+        }
+        public async Task<Question?> GetDetailsByIdIncludingPatientAndAttachmentsAsync(int id)
+        {
+            return await _dbSet
+                .Include(q => q.Patient)        // Lấy thông tin người hỏi
+                .Include(q => q.Attachments)    // Lấy file đính kèm của câu hỏi
+                .FirstOrDefaultAsync(q => q.Id == id);
         }
     }
 }

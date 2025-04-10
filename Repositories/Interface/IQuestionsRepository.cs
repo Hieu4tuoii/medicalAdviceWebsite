@@ -13,5 +13,9 @@ namespace WebsiteTuVan.Repositories
         Task<IEnumerable<Question>> GetByPatientIdAsync(int patientId);
         Task<Question?> GetDetailsByIdAsync(int id);
         Task<List<Question>> GetPublicAnsweredQuestionsAsync(int? categoryId, int excludeQuestionId, int count);
+
+        // Lấy tất cả câu hỏi, bao gồm thông tin Patient (User)
+        Task<IEnumerable<Question>> GetAllIncludingPatientAsync();
+        Task<Question?> GetDetailsByIdIncludingPatientAndAttachmentsAsync(int id);
     }
 }

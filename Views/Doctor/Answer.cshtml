@@ -1,0 +1,159 @@
+﻿@model WebsiteTuVan.ViewModels.DoctorAnswerViewModel
+@{
+    ViewData["Title"] = "Trả lời câu hỏi";
+}
+<div class="answer-page-container">
+    @* --- Hiển thị thông tin câu hỏi --- *@
+    <div class="question-display-section">
+        @if (!string.IsNullOrEmpty(Model.PatientName) && Model.PatientName != "N/A")
+        {
+            <div class="patient-name">Hỏi bởi: @Model.PatientName</div>
+        }
+        <h2 class="question-title-display">@Model.QuestionTitle</h2>
+        <div class="question-content-display">
+            <strong>Câu hỏi:</strong><br>
+            @Html.Raw(Model.QuestionContent.Replace("\n", "<br />"))
+        </div>
+        <div class="text-muted small">Ngày gửi: @Model.QuestionCreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
+
+        @* --- Hiển thị file đính kèm (nếu có) --- *@
+        @if (Model.Attachments.Any())
+        {
+            <div class="attachments-section mt-3">
+                <h6>File đính kèm:</h6>
+                <div class="attachments-list">
+                    @foreach (var attachment in Model.Attachments)
+                    {
+                        <div class="attachment-item">
+                            @if (attachment.ContentType.StartsWith("image/"))
+                            {
+                                // Hiển thị ảnh thumbnail, click để xem ảnh gốc
+                                <a href="@Url.Content(attachment.FilePath)" target="_blank" title="@attachment.FileName">
+                                    <img src="@Url.Content(attachment.FilePath)" alt="@attachment.FileName" />
+                                </a>
+                            }
+                            else
+                            {
+                                // Hiển thị link tải cho các loại file khác
+                                <a href="@Url.Content(attachment.FilePath)" target="_blank" download="@attachment.FileName">
+                                    <i class="fas fa-paperclip me-1"></i> @attachment.FileName
+                                </a>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+
+    @* --- Form nhập câu trả lời --- *@
+    <div class="answer-form-section">
+        <form asp-action="Answer" method="post">
+            @Html.AntiForgeryToken()
+            @* Truyền QuestionId ẩn đi để biết trả lời cho câu hỏi nào *@
+            <input type="hidden" asp-for="QuestionId" value="@Model.QuestionId" />
+
+            <div class="mb-3">
+                <label asp-for="AnswerContent" class="form-label">Trả lời:</label>
+                <textarea asp-for="AnswerContent" class="form-control" rows="8" placeholder="Viết câu trả lời của bạn tại đây..."></textarea>
+                <span asp-validation-for="AnswerContent" class="text-danger"></span>
+            </div>
+
+            @* Hiển thị lỗi chung nếu có (ví dụ: lỗi lưu DB) *@
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="submit-button-container">
+                <button type="submit" class="btn btn-primary">Gửi trả lời</button>
+                <a asp-action="Dashboard" class="btn btn-secondary ms-2">Hủy</a>
+            </div>
+        </form>
+    </div>
+
+</div>
+<style>
+    .answer-page-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background-color: #f8f9fa;
+        padding: 2rem;
+        border-radius: 8px;
+    }
+
+    .question-display-section {
+        border-bottom: 1px solid #dee2e6;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .patient-name {
+        font-size: 1.1rem;
+        color: #6c757d;
+    }
+
+    .question-title-display {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .question-content-display {
+        line-height: 1.6;
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    .attachments-section h6 {
+        font-weight: bold;
+        margin-bottom: 0.75rem;
+        color: #555;
+    }
+
+    .attachments-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem; /* Khoảng cách giữa các ảnh */
+    }
+
+    .attachment-item img {
+        max-width: 150px; /* Kích thước ảnh thumbnail */
+        max-height: 150px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer; /* Cho biết có thể click */
+        transition: transform 0.2s;
+    }
+
+        .attachment-item img:hover {
+            transform: scale(1.05);
+        }
+
+    .attachment-item a { /* Link cho file không phải ảnh */
+        display: block;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        text-decoration: none;
+        color: #0d6efd;
+    }
+
+        .attachment-item a:hover {
+            background-color: #f1f1f1;
+        }
+
+    .answer-form-section label {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .answer-form-section textarea {
+        min-height: 150px; /* Chiều cao tối thiểu cho textarea */
+    }
+
+    .submit-button-container {
+        text-align: right; /* Đẩy nút Gửi qua phải */
+        margin-top: 1rem;
+    }
+</style>
