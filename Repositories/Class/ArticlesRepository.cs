@@ -13,12 +13,10 @@ namespace WebsiteTuVan.Repositories
             _context = context;
         }
 
-        
-
         public async Task<List<Article>> FindAllPublished(int? categoryId, string? keyword)
         {
              //nếu có keyword thì mới tìm kiếm
-            var query = _context.Articles.Where(a => a.Status == "published" && a.CategoryId == categoryId);
+            var query = _context.Articles.Where(a => a.Status == "published");
             if (!string.IsNullOrEmpty(keyword))
             {
                 query = query.Where(a => a.Title.ToLower().Contains(keyword.ToLower()));

@@ -21,6 +21,9 @@ namespace WebsiteTuVan.Controllers
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
+            //get role from session
+            var role = HttpContext.Session.GetString("Role");
+            ViewData["Role"] = role;
             return View("Index");
         }
 

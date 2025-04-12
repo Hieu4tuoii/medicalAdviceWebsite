@@ -1,16 +1,23 @@
 @{
     ViewData["Title"] = "Danh sách bài viết";
+    var role = ViewData["Role"]?.ToString() ?? "user"; 
 }
 <link rel="stylesheet" href="/css/article-index.css">
-
 <body>
     <div class="container mt-4">
     <h1 class="text-center text-success mb-4">BÀI VIẾT</h1>
-
+    
+    @if (role == "doctor")
+    {
+        <div class="text-end mb-3">
+            <a href="/Article/Dashboard/all" class="btn btn-success">
+                <i class="bi bi-journal-text me-1"></i> Quản lý bài đăng
+            </a>
+        </div>
+    }
     <div id="article-list" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
         @* hiển thị danh sách bài viết ở đây *@
     </div>
-    
     </div>
     <script src="/js/article-index.js"></script>
 </body>
