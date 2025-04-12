@@ -10,6 +10,6 @@ namespace WebsiteTuVan.Repositories
          Task<List<Article>> FindByDoctorId(int doctorId, string status, string keyword);
          Task<Article> FindById(int id);
          //lấy ds bài viết đã đc đăng(bao gồm cả tìm kiếm theo tiêu đề)
-         Task<List<Article>> FindAllPublished(int? categoryId, string? keyword);
+         Task<List<Article>> FindAllPublished(int? categoryId, string? keyword, int? size);
     }
 }

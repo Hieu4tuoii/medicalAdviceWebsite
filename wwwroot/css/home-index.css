@@ -1,0 +1,593 @@
+/* --- Cài đặt cơ bản & Font --- */
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    background-color: #f8f9fa;
+}
+
+
+
+/* --- Styling cho Banner Container --- */
+.banner-overlay-container {
+    position: relative; /* Làm gốc cho positioning của overlay và text */
+    width: 100%;       /* Chiếm toàn bộ chiều rộng của section cha */
+    height: 400px;     /* Đặt chiều cao CỐ ĐỊNH ban đầu - Điều chỉnh cho phù hợp */
+    overflow: hidden;  /* Ẩn phần thừa nếu có */
+    display: flex;     /* Sử dụng Flexbox để căn giữa text */
+    align-items: center; /* Căn giữa text theo chiều dọc */
+    justify-content: center; /* Căn giữa text theo chiều ngang */
+    text-align: center; /* Căn giữa nội dung text bên trong */
+
+    /* Ảnh nền */
+    background-image: url('/uploads/images/herobanner.jpg'); /* URL ảnh banner */
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+/* --- Lớp phủ màu tối (Tùy chọn) --- */
+.banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Màu đen với độ trong suốt 40% */
+    z-index: 1; /* Nằm trên ảnh nền */
+}
+
+/* --- Styling cho phần Text trên Overlay --- */
+.text-content-overlay {
+    position: relative; /* Để nằm trên lớp overlay */
+    z-index: 2;         /* Nằm trên lớp overlay */
+    color: #ffffff;     /* Màu chữ trắng để nổi bật */
+    padding: 1rem 2rem; /* Khoảng đệm xung quanh text */
+    max-width: 90%;     /* Giới hạn chiều rộng text để không chạm sát viền */
+    /* Có thể thêm max-width cố định nếu muốn, ví dụ: max-width: 700px; */
+}
+
+/* --- Styling cho Tiêu đề và Phụ đề (Bên trong Overlay) --- */
+.text-content-overlay .section-title {
+    font-size: clamp(1.8rem, 5vw, 2.8rem); /* Tăng cỡ chữ tiêu đề */
+    font-weight: 700;
+    color: inherit; /* Kế thừa màu trắng từ cha */
+    margin-top: 0;
+    margin-bottom: 1rem; /* Khoảng cách dưới tiêu đề */
+    text-transform: uppercase;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Đổ bóng nhẹ cho chữ */
+}
+
+.text-content-overlay .section-subtitle {
+    font-size: clamp(1rem, 3vw, 1.2rem); /* Tăng cỡ chữ phụ đề */
+    color: inherit; /* Kế thừa màu trắng */
+    max-width: 650px; /* Giữ giới hạn chiều rộng */
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+    font-weight: 400; /* Có thể giảm độ đậm */
+     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Đổ bóng nhẹ cho chữ */
+}
+
+/* --- Responsive điều chỉnh --- */
+
+/* Cho màn hình nhỏ hơn (ví dụ: tablets) */
+@media (max-width: 768px) {
+    .banner-overlay-container {
+        height: 350px; /* Giảm chiều cao banner */
+    }
+
+     .text-content-overlay {
+        padding: 1rem 1.5rem;
+    }
+    /* font-size đã dùng clamp() nên tự điều chỉnh */
+}
+
+/* Cho màn hình rất nhỏ (ví dụ: mobile phones) */
+@media (max-width: 576px) {
+    .banner-overlay-container {
+        height: 300px; /* Giảm chiều cao banner thêm */
+    }
+
+    .text-content-overlay {
+        padding: 1rem 1rem; /* Giảm padding */
+        max-width: 95%;   /* Cho phép text rộng hơn chút */
+    }
+
+    /* font-size đã dùng clamp() nên tự điều chỉnh */
+}
+
+
+
+/* --- ABOUT US SECTION --- */
+.about-us-section {
+    background-color: #ffffff; /* Hoặc màu nền rất nhạt nếu cần */
+    /* Có thể thêm border-top nhẹ nếu muốn tách biệt rõ hơn với banner */
+    /* border-top: 1px solid #eee; */
+}
+
+.about-image-placeholder {
+    border: 2px dashed #ced4da;
+    padding: 6rem 2rem; /* Điều chỉnh padding cho phù hợp */
+    background-color: #f8f9fa;
+    color: #6c757d;
+    font-weight: bold;
+    border-radius: 8px; /* Bo góc placeholder */
+    min-height: 300px; /* Đảm bảo có chiều cao tối thiểu */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Nếu dùng ảnh thật thay placeholder, bạn có thể xóa class .about-image-placeholder và style trực tiếp thẻ img nếu cần */
+.about-us-section img.img-fluid {
+    max-height: 450px; /* Giới hạn chiều cao tối đa của ảnh nếu cần */
+    object-fit: cover; /* Đảm bảo ảnh phủ kín mà không bị méo */
+}
+
+
+.about-content {
+    /* Nội dung đã được căn chỉnh bởi Bootstrap columns */
+}
+
+.about-title {
+    color: #28a745; /* Màu xanh lá cây giống thiết kế */
+    font-size: clamp(1.4rem, 3.5vw, 1.8rem); /* Responsive font size */
+    font-weight: 700;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.about-description {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    line-height: 1.7;
+}
+
+/* --- Features Grid --- */
+.feature-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 25px; /* Bo tròn nhiều */
+    padding: 0.75rem 1.25rem;
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+    font-weight: 500;
+    color: #333;
+    background-color: #fff; /* Nền trắng */
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: default; /* Hoặc pointer nếu có thể click */
+}
+
+.feature-item:hover {
+    transform: translateY(-3px); /* Hiệu ứng nhấc lên khi hover */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.feature-item i {
+    font-size: 1.1rem; /* Kích thước icon */
+    /* Có thể đặt màu cụ thể cho từng icon nếu muốn */
+}
+.feature-item .icon-check { color: #28a745; } /* Xanh lá */
+.feature-item .icon-thumb { color: #17a2b8; } /* Xanh dương nhạt */
+.feature-item .icon-cert { color: #ffc107; } /* Vàng */
+.feature-item .icon-commit { color: #dc3545; } /* Đỏ */
+
+
+/* --- Read More Link --- */
+.read-more-link {
+    display: inline-block;
+    background-color: #f1f1f1; /* Nền xám nhạt */
+    border: 1px solid #e0e0e0;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px; /* Bo tròn */
+    color: #555;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.read-more-link:hover {
+    background-color: #e0e0e0;
+    color: #333;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.read-more-link i {
+    vertical-align: middle; /* Căn giữa icon mũi tên */
+    font-size: 0.8rem;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 991.98px) { /* Dưới lg breakpoint (khi cột stack) */
+    .about-image-placeholder {
+        margin-bottom: 2rem; /* Thêm khoảng cách dưới ảnh khi stack */
+        padding: 4rem 1rem;
+    }
+    .about-content {
+        text-align: center; /* Căn giữa text khi stack */
+    }
+     .features-grid .col-md-6 {
+        text-align: left; /* Giữ text trong feature item căn trái */
+        /* Có thể cho feature items chiếm full width nếu cần */
+        /* flex: 0 0 100%;
+        max-width: 100%; */
+    }
+     .feature-item {
+        justify-content: center; /* Căn giữa nội dung feature item nếu text-align center */
+     }
+    .read-more-link {
+        margin: 0 auto; /* Căn giữa nút xem thêm */
+    }
+
+}
+
+@media (max-width: 767.98px) { /* Dưới md breakpoint */
+     .features-grid .row {
+        /* Có thể giữ 2 cột hoặc cho thành 1 cột tùy ý */
+     }
+     .feature-item {
+         padding: 0.6rem 1rem; /* Giảm padding chút */
+     }
+}
+
+@media (max-width: 575.98px) { /* Dưới sm breakpoint */
+    /* Có thể làm feature grid thành 1 cột */
+    .features-grid .col-md-6 {
+         flex: 0 0 100%;
+         max-width: 100%;
+     }
+     .feature-item {
+         justify-content: flex-start; /* Căn trái lại trên mobile 1 cột */
+     }
+     .about-content {
+         text-align: left; /* Căn trái lại text trên mobile */
+     }
+      .read-more-link {
+        display: block; /* Chiếm full width nút xem thêm */
+        text-align: center;
+    }
+}
+
+
+/* --- FEATURED SERVICES SECTION --- */
+.featured-services-section {
+    background-color: #f8f9fa; /* Màu nền xám rất nhạt */
+}
+
+.featured-services-section .section-heading {
+    color: #28a745; /* Màu xanh lá cây */
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem; /* Giảm margin dưới tiêu đề */
+    position: relative;
+    display: inline-block; /* Để đường kẻ dưới chỉ chiếm chiều rộng của text */
+    padding-bottom: 10px; /* Khoảng cách cho đường kẻ dưới */
+}
+
+/* Đường kẻ xanh lá cây dưới tiêu đề */
+.featured-services-section .section-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0; /* Bắt đầu từ bên trái */
+    width: 100%; /* Chiếm toàn bộ chiều rộng tiêu đề */
+    height: 3px;
+    background-color: #28a745; /* Màu xanh lá cây */
+}
+
+/* Đường kẻ ngang mỏng trên cards */
+.featured-services-section .section-divider {
+    border-top: 1px solid #e0e0e0;
+    max-width: 100%; /* Điều chỉnh chiều rộng nếu cần */
+    margin-top: 2rem; /* Khoảng cách trên so với tiêu đề */
+    opacity: 0.6;
+}
+
+
+/* --- Service Card --- */
+/* Sử dụng d-flex và align-items-stretch trên thẻ col để các card cao bằng nhau */
+.service-card {
+    border: 1px solid #ced4da; /* Viền xám nhạt */
+    border-radius: 8px;        /* Bo góc nhẹ */
+    background-color: #ffffff; /* Nền trắng */
+    overflow: hidden;          /* Đảm bảo footer bo góc đúng */
+    display: flex;
+    flex-direction: column;    /* Xếp content và footer theo chiều dọc */
+    width: 100%;               /* Chiếm hết chiều rộng cột */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.service-card:hover {
+    transform: translateY(-5px); /* Hiệu ứng nhấc lên khi hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-content-placeholder {
+    min-height: 180px; /* Chiều cao tối thiểu cho phần content trắng */
+    /* Có thể thêm padding nếu cần đặt nội dung vào sau */
+    flex-grow: 1; /* Cho phép phần này giãn ra để đẩy footer xuống dưới */
+    background-color: #fff; /* Nền trắng */
+     /* Tùy chọn: Thêm style placeholder nếu muốn */
+    border-bottom: 1px dashed #eee;
+}
+
+.card-action-footer {
+    display: block; /* Để hoạt động như block */
+    background-color: #28a745; /* Màu nền xanh lá */
+    color: #ffffff;           /* Chữ trắng */
+    padding: 1rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;     /* Bỏ gạch chân link */
+    border-bottom-left-radius: 7px; /* Bo góc dưới khớp với card */
+    border-bottom-right-radius: 7px;
+    transition: background-color 0.3s ease;
+}
+
+.card-action-footer:hover {
+    background-color: #218838; /* Màu xanh lá đậm hơn khi hover */
+    color: #ffffff;
+}
+
+/* --- Responsive Adjustments for Featured Services --- */
+@media (max-width: 767.98px) { /* Dưới md breakpoint (khi stack thành 1 cột) */
+    /* Không cần col-md-6 nữa, nó sẽ tự stack */
+    .featured-services-section .col-lg-4 { /* Target các cột */
+         margin-bottom: 1.5rem; /* Thêm khoảng cách dưới khi stack */
+    }
+     .featured-services-section .row.g-4 {
+         justify-content: center !important; /* Căn giữa các card khi chỉ có 1-2 card */
+     }
+}
+
+
+/* --- FEATURED DOCTORS SECTION --- */
+.featured-doctors-section {
+    background-color: #ffffff;
+}
+
+/* (Giữ lại style .section-heading nếu bạn cần) */
+.featured-doctors-section .section-heading {
+    color: #28a745;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.featured-doctors-section .section-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #28a745;
+}
+
+
+/* --- Doctor Card --- */
+.doctor-card {
+    border: 1px solid #dcdcdc;
+    background-color: #fff;
+    overflow: hidden; /* Quan trọng khi dùng aspect-ratio cho con */
+    transition: box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.doctor-card:hover {
+     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Container mới cho ảnh */
+.doctor-image-container {
+    width: 100%;
+    aspect-ratio: 1; /* Đặt tỷ lệ khung hình mong muốn (Width / Height) */
+    overflow: hidden; /* Đảm bảo ảnh không tràn ra ngoài */
+    background-color: #f8f9fa; /* Màu nền chờ ảnh load */
+}
+
+/* CSS cho ảnh bên trong container */
+.doctor-card .doctor-avatar {
+    display: block;
+    width: 100%;
+    height: 100%; /* Lấp đầy container có aspect-ratio */
+    object-fit: cover; /* Cắt ảnh để vừa, giữ tỷ lệ */
+    object-position: center top; /* Ưu tiên phần trên của ảnh */
+}
+
+.doctor-info {
+    padding: 1rem 0.75rem;
+    border-top: 1px solid #dcdcdc;
+    flex-grow: 1; /* Đẩy phần info xuống nếu card cần giãn chiều cao */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px; /* Đặt chiều cao tối thiểu để tránh quá ngắn */
+}
+
+.doctor-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* (Giữ lại style .view-all-doctors-link) */
+.view-all-doctors-link {
+    color: #6c757d;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.view-all-doctors-link:hover {
+    color: #28a745;
+    text-decoration: underline;
+}
+
+.view-all-doctors-link i {
+    vertical-align: middle;
+}
+
+/* --- Responsive Adjustments for Doctors --- */
+/* Xóa các điều chỉnh height cố định cho ảnh trong media queries cũ */
+@media (max-width: 767.98px) {
+    .doctor-name {
+       font-size: 0.95rem;
+    }
+    .doctor-info {
+       padding: 0.8rem 0.6rem;
+       min-height: 55px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .doctor-name {
+        font-size: 0.9rem;
+    }
+    .doctor-info {
+        padding: 0.75rem 0.5rem;
+         min-height: 50px;
+    }
+    .view-all-doctors-link {
+        font-size: 0.85rem;
+    }
+}
+
+
+/* --- LATEST POSTS SECTION --- */
+.latest-posts-section {
+    background-color: #f8f9fa; /* Nền xám nhạt cho cả section */
+}
+
+/* Sử dụng lại style .section-heading nếu giống */
+.latest-posts-section .section-heading {
+    color: #28a745;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.latest-posts-section .section-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #28a745;
+}
+
+/* --- Post Card --- */
+.post-card {
+    border: 1px solid #e0e0e0; /* Viền xám nhạt hơn */
+    background-color: #f0f0f0; /* Màu nền xám rất nhạt cho card */
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    height: 100%;
+    display: flex; /* Cần thiết để link con chiếm 100% chiều cao */
+}
+
+.post-card:hover {
+     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+     transform: translateY(-4px);
+}
+
+/* Link bao quanh card */
+.post-card-link {
+    text-decoration: none;
+    color: inherit; /* Kế thừa màu chữ mặc định */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.post-image-container {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Tỷ lệ 1:1 (vuông) như trong hình */
+    overflow: hidden;
+    background-color: #e9ecef; /* Nền placeholder đậm hơn chút */
+    display: flex; /* Để căn giữa text "ẢNH" nếu không dùng img */
+    align-items: center;
+    justify-content: center;
+    color: #adb5bd;
+    font-weight: bold;
+}
+
+.post-card .post-thumbnail {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease; /* Hiệu ứng zoom nhẹ khi hover card */
+}
+
+.post-card:hover .post-thumbnail {
+     transform: scale(1.03); /* Zoom nhẹ ảnh khi hover card */
+}
+
+.post-info {
+    padding: 1rem 0.75rem;
+    border-top: 1px solid #e0e0e0;
+    background-color: #f0f0f0; /* Nền xám nhạt giống card */
+    flex-grow: 1; /* Cho phép phần info giãn ra nếu cần */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 65px; /* Đảm bảo có chiều cao tối thiểu */
+}
+
+.post-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+
+}
+
+/* --- View All Posts Link --- */
+.view-all-posts-link { /* Đổi tên class */
+    color: #6c757d;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.view-all-posts-link:hover {
+    color: #28a745;
+    text-decoration: underline;
+}
+
+.view-all-posts-link i {
+    vertical-align: middle;
+}
+
+/* --- Responsive Adjustments for Posts --- */
+@media (max-width: 767.98px) {
+    .post-title {
+       font-size: 0.95rem;
+    }
+    .post-info {
+       padding: 0.8rem 0.6rem;
+       min-height: 60px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .post-title {
+        font-size: 0.9rem;
+    }
+     .post-info {
+        min-height: 55px;
+    }
+}

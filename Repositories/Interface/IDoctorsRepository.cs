@@ -7,5 +7,7 @@ namespace WebsiteTuVan.Repositories
         //danh sách các phương thức của DoctorsRepository
         //...
         Task<Doctor?> GetDoctorByUserIdAsync(int userId);
+        //get doctor limit size
+        Task<List<Doctor>> FindTopDoctor(int? size);
     }
 }

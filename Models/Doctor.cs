@@ -14,10 +14,12 @@ public class Doctor{
     [Required]
     public int YearOfStartingWork { get; set; } = DateTime.Now.Year; //mặc định là năm hiện tại
 
+    public string Image;
+
     //bio
     [Required]
     [StringLength(500, ErrorMessage = "Bio không được vượt quá 500 ký tự")]
-    public string Bio { get; set; }
+    public string Bio { get; set;}
 
     //liên kết đến bảng Users
     [Required]

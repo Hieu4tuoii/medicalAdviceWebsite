@@ -1,4 +1,186 @@
-﻿
-<div class="text-center">
-    <h1 class="display-4">Trang chủ</h1>
-</div>
+﻿<link rel="stylesheet" href="/css/home-index.css" />
+<body>
+
+    <!-- ========== BANNER SECTION ========== -->
+    <section class="remote-care-section">
+        <div class="banner-overlay-container">
+            <div class="banner-overlay"></div>
+            <div class="text-content-overlay">
+                <h2 class="section-title">CHĂM SÓC SỨC KHỎE CỦA BẠN TỪ XA</h2>
+                <p class="section-subtitle">KẾT NỐI VỚI BÁC SĨ, ĐẶT CÂU HỎI, NHẬN TƯ VẤN NHANH CHÓNG</p>
+            </div>
+        </div>
+    </section>
+    <!-- ========== END BANNER SECTION ========== -->
+
+    <!-- ========== ABOUT US SECTION ========== -->
+    <section class="about-us-section py-5">
+        <div class="container">
+            <div class="row g-4 g-lg-5 align-items-center">
+
+                <!-- Left Column: Image -->
+                <div class="col-lg-5">
+                    <img style="height: 1000px;" src="/uploads/images/truso.webp"
+                        alt="Trụ sở Trung tâm Tư vấn Sức khỏe Mediask" class="img-fluid rounded shadow-sm">
+                </div>
+
+                <!-- Right Column: Content -->
+                <div class="col-lg-7">
+                    <div class="about-content">
+                        <h2 class="about-title mb-3">
+                            GIỚI THIỆU VỀ TRUNG TÂM <br>
+                            TƯ VẤN SỨC KHỎE MEDIASK
+                        </h2>
+                        <p class="about-description text-muted mb-4">
+                            Trung tâm được thành lập năm 2005 với đội ngũ hơn 200 bác sĩ, điều dưỡng từ các bệnh viện uy
+                            tín (Bạch Mai, Việt Đức, ĐH Y Hà Nội...) và được cố vấn chuyên môn bởi các giáo sư, tiến sĩ
+                            hàng đầu, luôn đem lại sự chuẩn xác và tận tâm cho mọi gia đình.
+                        </p>
+
+                        <!-- Features Grid -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-check-circle-fill icon-check me-2"></i> <!-- Bootstrap Icon -->
+                                    DỊCH VỤ UY TÍN
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-hand-thumbs-up-fill icon-thumb me-2"></i> <!-- Bootstrap Icon -->
+                                    ĐẢM BẢO CHẤT LƯỢNG
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-patch-check-fill icon-cert me-2"></i> <!-- Bootstrap Icon -->
+                                    ĐẦY ĐỦ CHỨNG NHẬN
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="feature-item">
+                                    <i class="bi bi-arrow-repeat icon-commit me-2"></i> <!-- Bootstrap Icon -->
+                                    CAM KẾT LÂU DÀI
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Read More Button/Link -->
+                        <a href="#" class="read-more-link">
+                            XEM THÊM <i class="bi bi-chevron-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ========== END ABOUT US SECTION ========== -->
+
+    <!-- ========== FEATURED SERVICES SECTION ========== -->
+    <section class="featured-services-section py-5 bg-light"> <!-- Thêm bg-light cho nền xám nhạt -->
+        <div class="container">
+
+            <!-- Section Title -->
+            <div class="row mb-4 mb-lg-5">
+                <div class="col-12 text-center">
+                    <h2 class="section-heading">DỊCH VỤ NỔI BẬT</h2>
+                    <hr class="section-divider mx-auto">
+                </div>
+            </div>
+            <!-- Services Grid -->
+            <div class="row g-4 justify-content-center">
+                <!-- Service Card 1: Đặt câu hỏi -->
+                <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
+                    <!-- col-md-6 để trên tablet hiển thị 2 cột -->
+                    <div class="service-card">
+                        <div class="card-content-placeholder">
+                            <!-- Khu vực này có thể chứa icon hoặc ảnh nhỏ sau này -->
+                            <img style="height: 200px; width: 500px; object-fit: cover; object-position: center;"
+                                src="/uploads/images/datcauhoi.png" alt="">
+                        </div>
+                        <a href="/Question/Create" class="card-action-footer text-center">
+                            ĐẶT CÂU HỎI
+                        </a>
+                    </div>
+                </div>
+                <!-- Service Card 2: Tư vấn với bác sĩ -->
+                <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
+                    <div class="service-card">
+                        <div class="card-content-placeholder">
+                            <img style="height: 200px; width: 500px; object-fit: cover; object-position: center;"
+                                src="/uploads/images/tuvanbacsi.png" alt="">
+                        </div>
+                        <a href="/Question/Create" class="card-action-footer text-center">
+                            TƯ VẤN VỚI BÁC SĨ
+                        </a>
+                    </div>
+                </div>
+                <!-- Service Card 3: Đọc bài viết -->
+                <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
+                    <div class="service-card">
+                        <div class="card-content-placeholder">
+                            <img style="height: 200px; width: 500px; object-fit: cover; object-position: center;"
+                                src="/uploads/images/baivietsuckhoe.png" alt="">
+                        </div>
+                        <a href="/Article" class="card-action-footer text-center">
+                            ĐỌC BÀI VIẾT SỨC KHỎE
+                        </a>
+                    </div>
+                </div>
+            </div> 
+
+        </div> 
+    </section>
+    <!-- ========== END FEATURED SERVICES SECTION ========== -->
+
+    <!-- ========== FEATURED DOCTORS SECTION ========== -->
+    <section class="featured-doctors-section py-5">
+        <div class="container">
+
+            <div class="row mb-4 mb-lg-5">
+                <div class="col-12 text-center">
+                    <h2 class="section-heading">DANH SÁCH BÁC SĨ TIÊU BIỂU</h2>
+                </div>
+            </div>
+            <div id="doctor-list" class="row g-4">
+                @* DANH sách bác sĩ sẽ load ở đây *@
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-end">
+                    <a href="/Doctor" class="view-all-doctors-link">
+                        XEM TẤT CẢ BÁC SĨ <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                </div>
+            </div>
+        </div> 
+    </section>
+    <!-- ========== END FEATURED DOCTORS SECTION ========== -->
+
+    <!-- ========== LATEST POSTS SECTION ========== -->
+    <section class="latest-posts-section py-5 bg-light"> <!-- Nền xám nhạt cho section -->
+        <div class="container">
+
+            <!-- Section Title -->
+            <div class="row mb-4 mb-lg-5">
+                <div class="col-12 text-center">
+                    <h2 class="section-heading">BÀI VIẾT MỚI NHẤT</h2>
+                </div>
+            </div>
+
+            <!-- Posts Grid -->
+            <div id="post-list" class="row g-4">
+                @* DANH sacsh baif view                 *@
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12 text-end">
+                    <a href="/Article" class="view-all-posts-link">
+                        XEM TẤT CẢ BÀI VIẾT <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- ========== END LATEST POSTS SECTION ========== -->
+    <script src="/js/home-index.js"></script>
+</body>

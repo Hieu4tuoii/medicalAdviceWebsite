@@ -4,11 +4,12 @@
     // Lấy thông tin từ Session một cách an toàn ở đầu file
     var userId = HttpContextAccessor.HttpContext?.Session.GetInt32("UserId"); // Lấy ID (nếu đã lưu)
     var userName = HttpContextAccessor.HttpContext?.Session.GetString("Name");
-    var userRole = HttpContextAccessor.HttpContext?.Session.GetString("Role")?.ToLower(); // Lấy role và chuyển thành chữ thường
-    bool isAnonymous = !userId.HasValue;
-}   
+    var userRole = HttpContextAccessor.HttpContext?.Session.GetString("Role")?.ToLower(); // Lấy role và chuyển thành chữ
+bool isAnonymous = !userId.HasValue;
+}
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,16 +17,23 @@
     @* --- Libraries --- *@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     @* --- Font Awesome --- *@
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     @* --- Custom CSS --- *@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     @* <link rel="stylesheet" href="~/WebsiteTuVan.styles.css" asp-append-version="true" /> *@ @* You might not need this if site.css handles everything *@
 
     @* --- Favicon (Tùy chọn) --- *@
-    @* <link rel="icon" href="/favicon.ico" type="image/x-icon"> *@
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <!-- === BOOTSTRAP ICONS CSS (THÊM DÒNG NÀY) === -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- =========================================== -->
+
 
 </head>
+
 <body>
     <header>
         @* --- Top Header --- *@
@@ -36,7 +44,8 @@
                     <div class="col-lg-5 col-md-12"> @* Full width on medium *@
                         <form asp-controller="Search" asp-action="Index" method="get" class="search-form">
                             <div class="input-group">
-                                <input type="text" name="query" class="form-control search-input" placeholder="Từ khóa tìm kiếm..." aria-label="Từ khóa tìm kiếm">
+                                <input type="text" name="query" class="form-control search-input"
+                                    placeholder="Từ khóa tìm kiếm..." aria-label="Từ khóa tìm kiếm">
                                 <button class="btn search-button" type="submit" id="button-addon2">
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </button>
@@ -44,8 +53,10 @@
                         </form>
                     </div>
                     @* --- Hotline & Ask Button --- *@
-                    <div  class="col-lg-7 col-md-12"> @* Full width on medium *@
-                        <div class="d-flex justify-content-lg-end justify-content-center align-items-center flex-wrap gap-3"> @* Center on medium/small, end on large, add gap *@
+                    <div class="col-lg-7 col-md-12"> @* Full width on medium *@
+                        <div
+                            class="d-flex justify-content-lg-end justify-content-center align-items-center flex-wrap gap-3">
+                            @* Center on medium/small, end on large, add gap *@
                             <div class="hotline">
                                 <a href="tel:0912345678" class="text-decoration-none">
                                     <i class="fa-solid fa-phone fa-lg me-2 icon-phone"></i>
@@ -70,7 +81,9 @@
         <nav class="navbar navbar-expand-lg navbar-dark main-navbar py-0"> @* Reduced padding py-0 *@
             <div class="container">
                 @* --- Navbar Toggler (Mobile Menu Button) --- *@
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarContent" aria-controls="mainNavbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#mainNavbarContent" aria-controls="mainNavbarContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -78,7 +91,7 @@
                 <div class="collapse navbar-collapse" id="mainNavbarContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link px-3 active" aria-current="page" href="/Home/Index">TRANG CHỦ</a> @* Adjusted padding px-3 *@
+                            <a class="nav-link px-3" aria-current="page" href="/Home/Index">TRANG CHỦ</a> @* Adjusted padding px-3 *@
                         </li>
                         @* === HIỂN THỊ MENU THEO ROLE === *@
                         @if (userRole == "user" || isAnonymous) // Menu cho User
@@ -99,16 +112,10 @@
                         }
                         @* === CÁC MENU CHUNG (Hiển thị cho mọi người hoặc chỉ khi đăng nhập?) === *@
                         @* Giả sử menu này hiển thị cho tất cả mọi người *@
-                        <li class="nav-item dropdown">
-                            <a class="nav-link px-3 dropdown-toggle" href="#" id="navbarDropdownDoctors" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                ĐỘI NGŨ BÁC SĨ
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownDoctors">
-                                <li><a class="dropdown-item" href="/Doctor/List">Danh sách bác sĩ</a></li>
-                                <li><a class="dropdown-item" href="/Doctor/Specialties">Chuyên khoa</a></li>
-                            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link px-3" href="/Doctor">ĐỘI NGŨ BÁC SĨ</a>
                         </li>
-                         <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link px-3" href="/Article">BÀI VIẾT</a>
                         </li>
                         <li class="nav-item">
@@ -120,7 +127,8 @@
                         @if (Context.Session.GetString("Email") != null)
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link px-3 dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link px-3 dropdown-toggle" href="#" id="userDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <span>@Context.Session.GetString("Name")</span>
                                     <i class="fas fa-user-circle me-1"></i>
                                 </a>
@@ -136,9 +144,9 @@
                             </li>
                         }
                     </ul>
-                     @* --- Mobile Specific Elements (Optional: Can add Hotline/Ask links inside collapsed menu too) --- *@
-                     <div class="d-lg-none border-top mt-3 pt-3">
-                     </div>
+                    @* --- Mobile Specific Elements (Optional: Can add Hotline/Ask links inside collapsed menu too) --- *@
+                    <div class="d-lg-none border-top mt-3 pt-3">
+                    </div>
                 </div>
             </div>
         </nav>
@@ -161,11 +169,15 @@
                     <ul class="list-unstyled footer-links">
                         <li><i class="fas fa-phone fa-fw me-2 footer-icon"></i> Hotline: 0916 582 115</li>
                         <li><i class="fas fa-envelope fa-fw me-2 footer-icon"></i> Email: fithou@gmail.com</li>
-                        <li><i class="fas fa-map-marker-alt fa-fw me-2 footer-icon"></i> Cơ sở 1: 96 Định Công, Thanh Xuân, HN</li>
-                        <li><i class="fas fa-map-marker-alt fa-fw me-2 footer-icon"></i> Cơ sở 2: 78 Duy Tân, Dịch Vọng Hậu, Cầu Giấy, HN</li>
-                        <li><i class="fas fa-map-marker-alt fa-fw me-2 footer-icon"></i> Cơ sở 3: 57 Trần Quốc Toản, Hoàn Kiếm, Hà Nội</li>
-                        <li><i class="fas fa-map-marker-alt fa-fw me-2 footer-icon"></i> Hải Phòng: Số 1 Lê Hồng Phong, Ngô Quyền, Hải Phòng</li>
-                         <li><i class="fas fa-globe fa-fw me-2 footer-icon"></i> Website: www.tuvansuckhoe.com</li>
+                        <li><i class="fas fa-map-marker-alt fa-fw me-2 footer-icon"></i> Cơ sở 1: 96 Định Công, Thanh
+                            Xuân, HN</li>
+                        <li><i class="fas fa-map-marker-alt fa-fw me-2 footer-icon"></i> Cơ sở 2: 78 Duy Tân, Dịch Vọng
+                            Hậu, Cầu Giấy, HN</li>
+                        <li><i class="fas fa-map-marker-alt fa-fw me-2 footer-icon"></i> Cơ sở 3: 57 Trần Quốc Toản,
+                            Hoàn Kiếm, Hà Nội</li>
+                        <li><i class="fas fa-map-marker-alt fa-fw me-2 footer-icon"></i> Hải Phòng: Số 1 Lê Hồng Phong,
+                            Ngô Quyền, Hải Phòng</li>
+                        <li><i class="fas fa-globe fa-fw me-2 footer-icon"></i> Website: www.tuvansuckhoe.com</li>
                     </ul>
                 </div>
 
@@ -173,12 +185,24 @@
                 <div class="col-lg-4 col-md-6">
                     <h5 class="footer-title mb-4">DỊCH VỤ NỔI BẬT</h5>
                     <ul class="list-unstyled footer-links footer-service-links">
-                        <li><a href="#" class="text-light"><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Đặt câu hỏi</a></li>
-                        <li><a href="#" class="text-light"><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Tư vấn với bác sĩ</a></li>
-                        <li><a href="#" class="text-light"><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Đọc bài viết sức khỏe</a></li>
-                        <li><a href="#" class="text-light"><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thay băng cắt chỉ tại nhà</a></li>
-                        <li><a href="#" class="text-light"><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Dịch Vụ Cấp Cứu và Xe Cứu Thương 24/7</a></li>
-                        <li><a href="#" class="text-light"><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thẩm mỹ nội</a></li>
+                        <li><a href="#" class="text-light"><i
+                                    class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Đặt câu hỏi</a>
+                        </li>
+                        <li><a href="#" class="text-light"><i
+                                    class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Tư vấn với bác
+                                sĩ</a></li>
+                        <li><a href="#" class="text-light"><i
+                                    class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Đọc bài viết sức
+                                khỏe</a></li>
+                        <li><a href="#" class="text-light"><i
+                                    class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thay băng cắt chỉ
+                                tại nhà</a></li>
+                        <li><a href="#" class="text-light"><i
+                                    class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Dịch Vụ Cấp Cứu và
+                                Xe Cứu Thương 24/7</a></li>
+                        <li><a href="#" class="text-light"><i
+                                    class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thẩm mỹ nội</a>
+                        </li>
                     </ul>
                 </div>
 
@@ -186,22 +210,23 @@
                 <div class="col-lg-4 col-md-12"> @* Full width on medium if needed *@
                     <h5 class="footer-title mb-4">GIỜ LÀM VIỆC</h5>
                     <ul class="list-unstyled footer-links">
-                       <li><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thứ hai: 0h > 24h</li>
-                       <li><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thứ ba: 0h > 24h</li>
-                       <li><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thứ tư: 0h > 24h</li>
-                       <li><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thứ năm: 0h > 24h</li>
-                       <li><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thứ sáu: 0h > 24h</li>
-                       <li><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thứ bảy: 0h > 24h</li>
-                       <li><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Chủ nhật: 0h > 24h</li>
+                        <li><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thứ hai: 0h > 24h</li>
+                        <li><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thứ ba: 0h > 24h</li>
+                        <li><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thứ tư: 0h > 24h</li>
+                        <li><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thứ năm: 0h > 24h</li>
+                        <li><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thứ sáu: 0h > 24h</li>
+                        <li><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Thứ bảy: 0h > 24h</li>
+                        <li><i class="fas fa-chevron-right fa-xs me-2 footer-icon-chevron"></i> Chủ nhật: 0h > 24h</li>
                     </ul>
                 </div>
             </div>
 
             @* --- Bottom Footer Row --- *@
             <hr class="mt-4 mb-3 footer-hr">
-             <div class="row align-items-center">
+            <div class="row align-items-center">
                 <div class="col-md-7 text-center text-md-start mb-3 mb-md-0"> @* Added margin bottom for mobile *@
-                    <p class="mb-1 small footer-bottom-text">Chúng tôi phục vụ 24/7 cho các nhu cầu của Quý vị. Xin vui lòng gọi cho chúng tôi khi cần: 0912.345.678</p>
+                    <p class="mb-1 small footer-bottom-text">Chúng tôi phục vụ 24/7 cho các nhu cầu của Quý vị. Xin vui
+                        lòng gọi cho chúng tôi khi cần: 0912.345.678</p>
                     <p class="mb-0 small footer-bottom-text">© @DateTime.Now.Year Bản quyền thuộc MediAsk</p>
                 </div>
                 <div class="col-md-5 text-center text-md-end">
@@ -224,4 +249,5 @@
     @* --- Render Section for page-specific scripts --- *@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

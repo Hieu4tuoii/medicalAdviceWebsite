@@ -166,9 +166,9 @@ namespace WebsiteTuVan.Controllers
 
         //get bài viết đã publish
         [HttpGet("Published")]
-        public async Task<JsonResult> getAllPublishedArticleList(int categoryId, string keyword)
+        public async Task<JsonResult> getAllPublishedArticleList(int? categoryId, string? keyword, int? size)
         {
-            var articles = await _repository.FindAllPublished(categoryId, keyword);
+            var articles = await _repository.FindAllPublished(categoryId, keyword, size);
             if (articles == null)
             {
                 return Json(new { success = false, message = "Không tìm thấy bài viết." });

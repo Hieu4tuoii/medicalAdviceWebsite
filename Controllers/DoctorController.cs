@@ -35,11 +35,29 @@ namespace WebsiteTuVan.Controllers
             return View();
         }
 
-        //get top doctor
+        //truy cập trang xem danh sách bác sĩ
+        public async Task<IActionResult> DoctorList()
+        {
+            return View("Index");
+        }
+
+        //get all doctor
         [HttpGet("Doctor/GetAll")]
         public async Task<IActionResult> GetAllDoctors()
         {
-            var doctors = await _repository.GetAllAsync();
+            var doctors = await _repository.GetAllAsync(); // Lấy tất cả bác sĩ
+            if (doctors == null || doctors.Count() == 0)
+            {
+                return Json(new { success = false, message = "Không tìm thấy bác sĩ." });
+            }
+            return Json(new { success = true, data = doctors });
+        }
+
+        //get top doctor
+        [HttpGet("Doctor/GetTop")]
+        public async Task<IActionResult> GetTopDoctors(int size)
+        {
+            var doctors = await _repository.FindTopDoctor(size); // Lấy 5 bác sĩ hàng đầu
             if (doctors == null || doctors.Count() == 0)
             {
                 return Json(new { success = false, message = "Không tìm thấy bác sĩ." });

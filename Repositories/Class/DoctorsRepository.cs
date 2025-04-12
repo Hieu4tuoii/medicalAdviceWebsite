@@ -13,10 +13,14 @@ namespace WebsiteTuVan.Repositories
             _context = context;
         }
 
+        public async Task<List<Doctor>> FindTopDoctor(int? size)
+        {
+           return await _context.Doctors.OrderByDescending(d => d.YearOfStartingWork).Take(size.Value).ToListAsync();
+        }
+
         public async Task<Doctor?> GetDoctorByUserIdAsync(int userId)
         {
             return await _context.Doctors.Where(d => d.UserId == userId).FirstOrDefaultAsync();
-            //return await _dbSet.FirstOrDefaultAsync(d => d.UserId == userId);
         }
     }
 }

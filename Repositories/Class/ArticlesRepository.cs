@@ -13,8 +13,9 @@ namespace WebsiteTuVan.Repositories
             _context = context;
         }
 
-        public async Task<List<Article>> FindAllPublished(int? categoryId, string? keyword)
+        public async Task<List<Article>> FindAllPublished(int? categoryId, string? keyword, int? size)
         {
+            //nếu size khác null thì tìm kiếm theo size
              //nếu có keyword thì mới tìm kiếm
             var query = _context.Articles.Where(a => a.Status == "published");
             if (!string.IsNullOrEmpty(keyword))
@@ -24,6 +25,11 @@ namespace WebsiteTuVan.Repositories
             //nếu categoryId khác null và khác 0 thì thêm điều kiện tìm kiếm theo categoryId
             if(categoryId!=null && categoryId!=0){
                 query = query.Where(a => a.CategoryId == categoryId);
+            }
+            //nếu size khác null thì tìm kiếm theo size
+            if (size != null && size != 0)
+            {
+                query = query.OrderByDescending(a => a.CreatedAt).Take(size.Value);
             }
             return await query.ToListAsync();
         }

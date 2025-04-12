@@ -9,10 +9,9 @@ async function loadArticleById() {
     console.log(data);
     if (data.success) {
       document.getElementById("title").innerHTML = data.data.Title;
-      document.getElementById("category").innerHTML = data.data.Category.Name;
+      document.getElementById("doctor-name").innerHTML = data.data.Doctor.User.Name;
       document.getElementById("content").innerHTML = data.data.Content;
       document.getElementById("image").setAttribute("src", data.data.Image);
-
       loadDoctors();
       //load ds bài viết liên quan
       loadRelatedArticles(data.data.Category.Id);
@@ -28,13 +27,11 @@ loadArticleById();
 // Tải danh sách bác sĩ
 async function loadDoctors() {
   try {
-    const res = await fetch("/Doctor/GetAll");
+    const res = await fetch("/Doctor/GetTop?size=1");
     const data = await res.json();
 
-    //nếu thành công thì hiện 5 bác sĩ đầu tiên
     if (data.success && data.data.length > 0) {
       const doctorsHtml = data.data
-        .slice(0, 5)
         .map(
           (doctor) => `
           <li>
@@ -70,13 +67,12 @@ async function loadDoctors() {
 async function loadRelatedArticles(categoryId) {
   try {
     const res = await fetch(
-      `/Article/Published?categoryId=${categoryId}`
+      `/Article/Published?categoryId=${categoryId}&size=4`
     );
     const data = await res.json();
 
     if (data.success && data.data.length > 0) {
       const relatedHtml = data.data
-        .slice(0, 4) // Chỉ lấy 5 bài viết liên quan
         .map(
           (article) => `
           <div class="related-item">
