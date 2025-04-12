@@ -6,7 +6,7 @@ public class Article
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    public int Id{ get; set; }
     [Required]
     [StringLength(100, ErrorMessage = "tiêu đề không được vượt quá 100 ký tự")]
     public string Title { get; set; } // tiêu đề bài viết

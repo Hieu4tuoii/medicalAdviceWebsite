@@ -1,0 +1,122 @@
+@{
+    string status = @ViewData["Status"].ToString();
+    ViewData["Title"] = "QUẢN LÝ Danh Sách Bài Viết";
+}
+
+<link rel="stylesheet" href="/css/article-dashboard.css">
+<body>
+    <div class="main-container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="m-0">Quản Lý Bài Viết</h2>
+            <a href="/Article/Add" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>Tạo Bài Viết Mới
+            </a>
+        </div>
+
+        <!-- Tab trạng thái -->
+        <ul class="nav nav-pills status-tab">
+            <li class="nav-item">
+                <a class="nav-link @(status == "all" ? "active" : "")" href="/Article/Dashboard/all">Tất cả</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(status == "published" ? "active" : "")" href="/Article/Dashboard/published">Đã
+                    đăng</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(status == "draft" ? "active" : "")" href="/Article/Dashboard/draft">Nháp</a>
+            </li>
+        </ul>
+
+        <!-- Bộ lọc -->
+        <div class="card filter-box">
+            <div class="row align-items-end">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <label for="searchInput" class="form-label">Tìm kiếm</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Tìm theo tiêu đề...">
+                        <button onclick="loadArticleList()" class="btn btn-outline-secondary" type="button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Danh sách bài báo -->
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-0">Danh sách bài viết</h5>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table id="table-article" data-status=@status class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th width="90">Ảnh</th>
+                                <th>Tiêu đề</th>
+                                <th width="120">Danh mục</th>
+                                <th width="120">Trạng thái</th>
+                                <th width="170">Ngày tạo</th>
+                                <th width="150">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="article-list">
+                            <!-- Dữ liệu động sẽ được tạo bởi JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Hiển thị khi không có dữ liệu -->
+                <div class="empty-state" style="display: none;">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h5>Không có bài báo nào</h5>
+                    <p class="text-muted">Thử thay đổi bộ lọc hoặc tạo bài báo mới</p>
+                    <a href="#" class="btn btn-primary mt-3">
+                        <i class="fas fa-plus me-2"></i>Tạo Bài Báo Mới
+                    </a>
+                </div>
+            </div>
+            @* <div class="card-footer bg-white">
+                <nav>
+                    <ul class="pagination mb-0">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Trước</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Sau</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div> *@
+        </div>
+    </div>
+
+    <!-- Modal Xác nhận Xóa -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn xóa bài báo này? Hành động này không thể hoàn tác.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                    <button onclick="deleteArticle()" type="button" class="btn btn-danger" id="confirmDelete">Xác nhận
+                        xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/article-dashboard.js" crossorigin="anonymous"></script>
+</body>
+</html>

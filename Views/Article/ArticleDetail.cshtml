@@ -1,0 +1,81 @@
+@{
+    ViewData["Title"] = "Chi tiết bài viết";
+    var articleId = ViewData["ArticleId"].ToString();
+}
+
+<link rel="stylesheet" href="/css/article-detail.css">
+
+<div id="article-container" class="article-container" article-id=@articleId>
+    <h1 id="title" class="article-title">Loading...</h1>
+    
+    <div class="article-content">
+        <div id="main-content" class="main-content">
+            <div class="content-header">
+                <p id="category">Đang tải danh mục...</p>
+            </div>
+            <div id="content-body" class="content-body">
+                <img id="image" src="" alt="Hình ảnh bài viết" class="article-image">
+                <div id="content" class="content">
+                    <p>Đang tải nội dung...</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <div class="green-header">
+                    DỊCH VỤ NỔI BẬT
+                </div>
+                <div class="sidebar-content service-list">
+                    <div class="service-item">
+                        <a href="/Question/Create" class="service-link">
+                            <i class="fas fa-question-circle service-icon"></i>
+                            <div class="service-info">
+                                <h5>Đặt câu hỏi</h5>
+                                <p>Nhận tư vấn miễn phí từ bác sĩ</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="service-item">
+                        <a href="#" class="service-link">
+                            <i class="fas fa-user-md service-icon"></i>
+                            <div class="service-info">
+                                <h5>Tư vấn với bác sĩ</h5>
+                                <p>Đặt lịch tư vấn trực tiếp</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="service-item">
+                        <a href="#" class="service-link">
+                            <i class="fas fa-book-medical service-icon"></i>
+                            <div class="service-info">
+                                <h5>Đọc bài viết sức khỏe</h5>
+                                <p>Kiến thức y tế bổ ích</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="green-header">
+                    BÁC SĨ TIÊU BIỂU
+                </div>
+                <div class="sidebar-content">
+                    <ul id="doctors-list" class="doctor-list">
+                        <li>Đang tải danh sách bác sĩ...</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="related-articles">
+        <h3 class="related-title">TIN LIÊN QUAN</h3>
+        <div id="related-posts" class="related-grid">
+            <!-- Bài viết liên quan sẽ được thêm vào đây bằng JavaScript -->
+        </div>
+    </div>
+</div>
+
+<script src="/js/article-detail.js"></script>

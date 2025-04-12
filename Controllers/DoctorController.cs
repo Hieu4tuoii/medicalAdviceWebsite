@@ -34,6 +34,20 @@ namespace WebsiteTuVan.Controllers
         {
             return View();
         }
+
+        //get top doctor
+        [HttpGet("Doctor/GetAll")]
+        public async Task<IActionResult> GetAllDoctors()
+        {
+            var doctors = await _repository.GetAllAsync();
+            if (doctors == null || doctors.Count() == 0)
+            {
+                return Json(new { success = false, message = "Không tìm thấy bác sĩ." });
+            }
+
+            return Json(new { success = true, data = doctors });
+        }
+
         // Action chính cho trang của bác sĩ
         public async Task<IActionResult> Dashboard(string statusFilter = "pending", int pageNumber = 1, int pageSize = 10)
         {

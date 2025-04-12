@@ -6,5 +6,7 @@ namespace WebsiteTuVan.Repositories
     {
         //danh sách các phương thức của CategoriesRepository
         //...
+        //get all categories
+        Task<IEnumerable<Category>> GetAllCategoriesAsync();
     }
 }

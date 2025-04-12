@@ -13,11 +13,10 @@ namespace WebsiteTuVan.Repositories
             _context = context;
         }
 
-        // Implement any additional methods specific to Doctors here
         public async Task<Doctor?> GetDoctorByUserIdAsync(int userId)
         {
-            // Giả định bạn có trường UserId trong model Doctor liên kết đến User.Id
-            return await _dbSet.FirstOrDefaultAsync(d => d.UserId == userId);
+            return await _context.Doctors.Where(d => d.UserId == userId).FirstOrDefaultAsync();
+            //return await _dbSet.FirstOrDefaultAsync(d => d.UserId == userId);
         }
     }
 }

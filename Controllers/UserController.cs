@@ -5,12 +5,15 @@ using WebsiteTuVan.Models;
 
 namespace WebsiteTuVan.Controllers
 {
+    [Route("User")]
     public class UserController : Controller
     {
         private readonly IUsersRepository _repository;
+        private readonly IDoctorsRepository _doctorRepository;
 
-        public UserController(IUsersRepository repository)
+        public UserController(IUsersRepository repository, IDoctorsRepository doctorRepository)
         {
+            _doctorRepository = doctorRepository;
             _repository = repository;
         }
         public async Task<IActionResult> Index()
@@ -20,12 +23,14 @@ namespace WebsiteTuVan.Controllers
         }
 
         //Truy cập trang đăng ký
+        [HttpGet("Register")]
         public IActionResult Register()
         {
             return View();
         }
 
         //Truy cập trang đăng nhập
+        [HttpGet("Login")]
         public IActionResult Login()
         {
             return View();
@@ -33,7 +38,7 @@ namespace WebsiteTuVan.Controllers
 
         //xử lý đăng ký
         [ValidateAntiForgeryToken]
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterViewModel model){
             if(ModelState.IsValid){
                 //kiểm tra email đã tồn tại chưa
@@ -58,7 +63,7 @@ namespace WebsiteTuVan.Controllers
 
         //xử lý đăng nhập
         [ValidateAntiForgeryToken]
-        [HttpPost]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel model){
             if(ModelState.IsValid){
                 //kiểm tra email và mật khẩu
@@ -74,6 +79,15 @@ namespace WebsiteTuVan.Controllers
                     HttpContext.Session.SetString("Email", user.Email.ToString());
                     HttpContext.Session.SetString("Name", user.Name.ToString());
                     HttpContext.Session.SetString("Role", user.Role.ToString());
+                    //nễu là bác sĩ thì lưu thêm cả id bác sĩ vào session
+                    if (user.Role == "doctor")
+                    {
+                        var doctor = await _doctorRepository.GetDoctorByUserIdAsync(user.Id);
+                        if (doctor != null)
+                        {
+                            HttpContext.Session.SetInt32("DoctorId", doctor.Id);
+                        }
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Địa chỉ email hoặc mật khẩu không đúng");
@@ -82,6 +96,7 @@ namespace WebsiteTuVan.Controllers
         }
 
         //xử lý đăng xuất
+        [HttpGet("Logout")]
         public IActionResult Logout(){
             //xóa session
             HttpContext.Session.Clear();

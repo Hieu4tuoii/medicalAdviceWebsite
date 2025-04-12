@@ -1,0 +1,70 @@
+@{
+    var ArticleId = ViewData["ArticleId"].ToString();
+    ViewData["Title"] = "Chỉnh Sửa Bài Viết";
+}
+<link rel="stylesheet" href="/css/article-save.css">
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="form-container">
+            <div class="header">
+                <h2 class="text-center">Chỉnh Sửa Bài </h2>
+                <p class="text-center text-muted">Điền đầy đủ thông tin bên dưới để Chỉnh sửa bài viết của bạn</p>
+            </div>
+            <form article-id="@ArticleId" id="form-update-article">
+                <!-- Tiêu đề -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold required-field">Tiêu đề</label>
+                    <input type="text" class="form-control form-control-lg" id="title" name="title" required
+                        placeholder="Nhập tiêu đề bài viết">
+                    <span class="text-danger"></span>
+                    <div class="form-text">Tiêu đề nên ngắn gọn và chứa từ khóa quan trọng</div>
+                </div>
+                @* <input type="hidden" asp-for="Status" />
+        <input type="hidden" asp-for="Image" /> *@
+                <!-- Danh mục -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Danh mục</label>
+                    <select id="form-select-category" class="form-select">
+                    </select>
+                    <span class="text-danger"></span>
+                </div>
+
+                <!-- Nội dung -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold required-field">Nội dung</label>
+                    <textarea class="form-control" id="content" name="content" rows="10" required
+                        placeholder="Nhập nội dung bài báo..."></textarea>
+                    <span class="text-danger"></span>
+                </div>
+
+                <!-- Upload ảnh -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Ảnh đại diện</label>
+                    <label for="image" class="custom-file-upload">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="fw-bold">Kéo và thả ảnh vào đây hoặc bấm để chọn ảnh</div>
+                        <div class="text-muted small mt-1">Hỗ trợ: JPG, JPEG, PNG (Tối đa 5MB)</div>
+                    </label>
+                    <input type="file" id="image" name="image" accept="image/*" class="d-none">
+                    <img id="imagePreview" class="preview-image" src="" alt="Ảnh xem trước">
+                    <input type="hidden" id="imageUrl" name="imageUrl">
+                </div>
+
+                <!-- Nút gửi -->
+                <div class="d-flex justify-content-between">
+                    <a href="/Article/Dashboard/all" type="button" class="btn btn-outline-secondary" id="btnCancel">Hủy
+                        bỏ</a>
+                    <div>
+                        <button type="button" onclick="saveArticle('draft')" class="btn btn-outline-primary me-2"
+                            id="btnSaveDraft">Lưu nháp</button>
+                        <button type="button" onclick="saveArticle('published')" class="btn btn-primary btn-submit">Đăng
+                            bài</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="/js/article-update.js"></script>
+</body>

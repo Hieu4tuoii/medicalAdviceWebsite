@@ -44,7 +44,7 @@
                         </form>
                     </div>
                     @* --- Hotline & Ask Button --- *@
-                    <div class="col-lg-7 col-md-12"> @* Full width on medium *@
+                    <div  class="col-lg-7 col-md-12"> @* Full width on medium *@
                         <div class="d-flex justify-content-lg-end justify-content-center align-items-center flex-wrap gap-3"> @* Center on medium/small, end on large, add gap *@
                             <div class="hotline">
                                 <a href="tel:0912345678" class="text-decoration-none">
@@ -81,7 +81,6 @@
                             <a class="nav-link px-3 active" aria-current="page" href="/Home/Index">TRANG CHỦ</a> @* Adjusted padding px-3 *@
                         </li>
                         @* === HIỂN THỊ MENU THEO ROLE === *@
-
                         @if (userRole == "user" || isAnonymous) // Menu cho User
                         {
                             <li class="nav-item">
@@ -109,9 +108,8 @@
                                 <li><a class="dropdown-item" href="/Doctor/Specialties">Chuyên khoa</a></li>
                             </ul>
                         </li>
-                        
                          <li class="nav-item">
-                            <a class="nav-link px-3" href="/Article/Index">BÀI VIẾT</a>
+                            <a class="nav-link px-3" href="/Article">BÀI VIẾT</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-3" href="/Question/Public">CÂU HỎI CÔNG KHAI</a>
@@ -124,7 +122,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link px-3 dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span>@Context.Session.GetString("Name")</span>
-                                    <i class="fas fa-user-circle me-1"></i> @Context.Session.GetString("UserName")
+                                    <i class="fas fa-user-circle me-1"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                     <li><a class="dropdown-item" href="/User/Logout">Đăng xuất</a></li>
@@ -140,7 +138,6 @@
                     </ul>
                      @* --- Mobile Specific Elements (Optional: Can add Hotline/Ask links inside collapsed menu too) --- *@
                      <div class="d-lg-none border-top mt-3 pt-3">
-                        
                      </div>
                 </div>
             </div>

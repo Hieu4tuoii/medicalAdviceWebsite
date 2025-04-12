@@ -1,0 +1,174 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #f1f1f1;
+    padding: 18px 20px;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    background-color: #f8f9fa;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.badge {
+    padding: 6px 10px;
+    font-weight: 500;
+}
+
+.badge-draft {
+    background-color: #f1f1f1;
+    color: #6c757d;
+}
+
+.badge-published {
+    background-color: #d1e7dd;
+    color: #146c43;
+}
+
+.article-title {
+    font-weight: 500;
+    color: #333;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: 300px;
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    margin-right: 5px;
+    transition: all 0.2s;
+}
+
+.btn-view {
+    background-color: #e8f4ff;
+    color: #0d6efd;
+}
+
+.btn-edit {
+    background-color: #fff8e1;
+    color: #ffc107;
+}
+
+.btn-delete {
+    background-color: #ffebee;
+    color: #dc3545;
+}
+
+.action-btn:hover {
+    opacity: 0.8;
+}
+
+.thumbnail-img {
+    width: 80px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.category-badge {
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.filter-box {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.pagination {
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.pagination .page-link {
+    color: #0d6efd;
+}
+
+.page-info {
+    text-align: center;
+    margin-top: 10px;
+    color: #6c757d;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.empty-state-icon {
+    font-size: 60px;
+    color: #dee2e6;
+    margin-bottom: 15px;
+}
+
+.status-tab {
+    border: none;
+    margin-bottom: 20px;
+}
+
+.status-tab .nav-link {
+    border: none;
+    color: #6c757d;
+    padding: 12px 20px;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+.status-tab .nav-link.active {
+    color: #0d6efd;
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+.status-tab .nav-link:hover:not(.active) {
+    background-color: #f8f9fa;
+}
+
+.status-tab .badge {
+    margin-left: 5px;
+    background-color: #e9ecef;
+    color: #6c757d;
+}
+
+.status-tab .nav-link.active .badge {
+    background-color: #0d6efd;
+    color: #fff;
+}
