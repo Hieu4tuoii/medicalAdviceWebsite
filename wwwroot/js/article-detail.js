@@ -80,7 +80,7 @@ async function loadRelatedArticles(categoryId) {
         .map(
           (article) => `
           <div class="related-item">
-            <a href="/Article/ArticleDetail/${article.Id}">
+            <a href="/Article/Detail/${article.Id}">
               <div class="related-image">
                 <img src="${article.Image}" alt="${article.Title}">
               </div>
