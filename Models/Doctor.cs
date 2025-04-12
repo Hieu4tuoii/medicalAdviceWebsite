@@ -14,7 +14,7 @@ public class Doctor{
     [Required]
     public int YearOfStartingWork { get; set; } = DateTime.Now.Year; //mặc định là năm hiện tại
 
-    public string Image;
+    public string? Image { get; set; }
 
     //bio
     [Required]

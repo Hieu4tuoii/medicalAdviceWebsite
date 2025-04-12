@@ -1,0 +1,200 @@
+﻿@model WebsiteTuVan.ViewModels.PublicQuestionListViewModel
+@{
+    ViewData["Title"] = Model.CategoryId.HasValue ? $"Câu hỏi công khai - {Model.CategoryName}" : "Câu hỏi công khai";
+    // Bỏ layout của bác sĩ nếu đang dùng chung
+    // Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container mt-4">
+    <div class="public-questions-layout">
+
+        @* --- Sidebar (Tìm kiếm và Chuyên mục) --- *@
+        <aside class="questions-sidebar">
+            @*-- Search Form --*@
+            <div class="sidebar-section">
+                <h5 class="sidebar-title">Tìm kiếm câu hỏi</h5>
+                <form asp-action="Public" asp-controller="Question" method="get">
+                    @* Giữ lại bộ lọc category khi tìm kiếm *@
+                    @if (Model.CategoryId.HasValue)
+                    {
+                        <input type="hidden" name="categoryId" value="@Model.CategoryId" />
+                    }
+                    <div class="input-group mb-3">
+                        <input type="text" name="searchTerm" class="form-control" placeholder="Nhập từ khóa..." value="@Model.SearchTerm" aria-label="Tìm kiếm">
+                        <button class="btn btn-outline-primary" type="submit">Tìm</button>
+                    </div>
+                </form>
+            </div>
+
+            @*-- Category Filter --*@
+            @if (Model.AllCategories.Any())
+            {
+                <div class="sidebar-section">
+                    <h5 class="sidebar-title">Mục phổ biến</h5>
+                    <div class="list-group list-group-flush category-list">
+                        @* Link xem tất cả *@
+                        <a asp-action="Public" asp-controller="Question" asp-route-searchTerm="@Model.SearchTerm" asp-route-categoryId=""
+                           class="list-group-item list-group-item-action @(!Model.CategoryId.HasValue ? "active" : "")">
+                            Tất cả chuyên mục
+                        </a>
+                        @* Lặp qua các chuyên mục *@
+                        @foreach (var category in Model.AllCategories)
+                        {
+                            <a asp-action="Public" asp-controller="Question" asp-route-searchTerm="@Model.SearchTerm" asp-route-categoryId="@category.Id"
+                               class="list-group-item list-group-item-action @(Model.CategoryId == category.Id ? "active" : "")">
+                                @category.Name
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        </aside>
+
+        @* --- Main Content (Danh sách câu hỏi) --- *@
+        <section class="questions-main-content">
+            <h3 class="mb-3">
+                @if (Model.CategoryId.HasValue)
+                {
+                    <span>Chuyên mục: @Model.CategoryName</span>
+                }
+                else if (!string.IsNullOrWhiteSpace(Model.SearchTerm))
+                {
+                    <span>Kết quả tìm kiếm cho: "@Model.SearchTerm"</span>
+                }
+                else
+                {
+                    <span>Câu hỏi mới nhất</span>
+                }
+            </h3>
+
+            @if (!Model.Questions.Any())
+            {
+                <div class="alert alert-info">Không tìm thấy câu hỏi nào phù hợp.</div>
+            }
+            else
+            {
+                @* Grid hiển thị câu hỏi (2 cột trên sm trở lên) *@
+                <div class="row row-cols-1 row-cols-sm-2 g-3">
+                    @foreach (var q in Model.Questions)
+                    {
+                        <div class="col">
+                            <a asp-action="Details" asp-controller="Question" asp-route-id="@q.Id" class="text-decoration-none">
+                                <div class="public-question-card">
+                                    @* Có thể thay bằng ảnh thật nếu có q.ImageUrl *@
+                                    <div class="placeholder-img">(Ảnh)</div>
+                                    <div class="card-body">
+                                        <h5 class="card-title" title="@q.Title">@q.Title</h5>
+                                        @if (!string.IsNullOrEmpty(q.AnsweringDoctorName))
+                                        {
+                                            <p class="card-text mb-1">Trả lời bởi: <strong>@q.AnsweringDoctorName</strong></p>
+                                        }
+                                        @if (q.DoctorExperienceYears.HasValue)
+                                        {
+                                            <p class="card-text">@q.DoctorExperienceYears năm kinh nghiệm</p>
+                                        }
+                                        @* Optional: Link xem thêm ở cuối card nếu cần *@
+                                        @* <div class="card-footer-link mt-auto"><span class="small link-primary">Xem chi tiết</span></div> *@
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+
+                @if (Model.TotalPages > 1)
+                {
+                    <div class="pagination-container">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
+                                    <a class="page-link" asp-action="PublicIndex"
+                                       asp-route-searchTerm="@Model.SearchTerm" asp-route-categoryId="@Model.CategoryId"
+                                       asp-route-pageNumber="@(Model.CurrentPage - 1)">&laquo;</a>
+                                </li>
+                                @for (int i = 1; i <= Model.TotalPages; i++)
+                                {
+                                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                        <a class="page-link" asp-action="PublicIndex"
+                                           asp-route-searchTerm="@Model.SearchTerm" asp-route-categoryId="@Model.CategoryId"
+                                           asp-route-pageNumber="@i">@i</a>
+                                    </li>
+                                }
+                                <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+                                    <a class="page-link" asp-action="PublicIndex"
+                                       asp-route-searchTerm="@Model.SearchTerm" asp-route-categoryId="@Model.CategoryId"
+                                       asp-route-pageNumber="@(Model.CurrentPage + 1)">&raquo;</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                }
+            }
+        </section>
+
+    </div>
+</div>
+
+<style>
+    .public-questions-layout { /* Tương tự Doctor Dashboard */
+        display: flex;
+        gap: 2rem;
+        margin-top: 1.5rem;
+    }
+    .questions-sidebar {
+        flex: 0 0 280px; /* Rộng hơn sidebar bác sĩ một chút */
+        background-color: #fff;
+        padding: 1.5rem;
+        border-radius: 5px;
+        height: fit-content;
+        border: 1px solid #e0e0e0;
+    }
+     .sidebar-section { margin-bottom: 2rem; }
+     .sidebar-title { font-weight: bold; margin-bottom: 1rem; font-size: 1.1rem; }
+     .category-list .list-group-item {
+         border: none; padding: 0.6rem 0; font-size: 0.95rem;
+         color: #333; border-bottom: 1px solid #f0f0f0;
+     }
+     .category-list .list-group-item:last-child { border-bottom: none; }
+     .category-list .list-group-item.active {
+         color: #0d6efd; font-weight: bold; background-color: transparent;
+     }
+      .category-list .list-group-item:hover:not(.active) { color: #0a58ca; }
+
+    .questions-main-content { flex-grow: 1; }
+
+    .public-question-card { /* Style cho card câu hỏi */
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        background-color: #fff;
+        height: 100%;
+        transition: box-shadow 0.2s ease;
+        display: flex;
+        flex-direction: column;
+    }
+     .public-question-card:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+     .public-question-card .placeholder-img {
+         width: 100%; height: 160px; background-color: #e9ecef;
+         display: flex; align-items: center; justify-content: center;
+         color: #adb5bd; border-top-left-radius: 5px; border-top-right-radius: 5px;
+     }
+      .public-question-card .card-body { padding: 1rem; flex-grow: 1; display: flex; flex-direction: column;}
+      .public-question-card .card-title {
+          font-weight: 600; margin-bottom: 0.75rem; font-size: 1.05rem; line-height: 1.3;
+          display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+          overflow: hidden; text-overflow: ellipsis; min-height: 2.7em; /* Chiều cao 2 dòng */
+          color: #333;
+      }
+       .public-question-card .card-text { font-size: 0.88rem; color: #6c757d; margin-bottom: 0.25rem; }
+       .public-question-card .card-text strong { color: #555; }
+       .public-question-card a { text-decoration: none; color: inherit; }
+       .public-question-card .card-footer-link { margin-top: auto; /* Đẩy link xuống cuối */ } /* Optional: Add a "Read more" link */
+
+     .pagination-container{ margin-top: 2rem; display: flex; justify-content: center; }
+     /* CSS cho pagination giữ nguyên */
+
+     /* Responsive adjustments */
+     @@media (max-width: 991.98px) { /* Dưới lg */
+         .public-questions-layout { flex-direction: column; }
+         .questions-sidebar { width: 100%; margin-bottom: 1.5rem; flex-basis: auto; }
+     }
+
+</style>

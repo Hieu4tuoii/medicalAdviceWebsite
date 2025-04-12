@@ -1,6 +1,7 @@
 
 
 
+using WebsiteTuVan.Helpers;
 using WebsiteTuVan.Models;
 
 namespace WebsiteTuVan.Repositories
@@ -17,5 +18,6 @@ namespace WebsiteTuVan.Repositories
         // Lấy tất cả câu hỏi, bao gồm thông tin Patient (User)
         Task<IEnumerable<Question>> GetAllIncludingPatientAsync();
         Task<Question?> GetDetailsByIdIncludingPatientAndAttachmentsAsync(int id);
+        Task<PagedResult<Question>> GetPublicQuestionsAsync(string? searchTerm, int? categoryId, int pageNumber, int pageSize);
     }
 }

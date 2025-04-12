@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebsiteTuVan.Data;
+using WebsiteTuVan.Helpers;
 using WebsiteTuVan.Models;
 namespace WebsiteTuVan.Repositories
 {
@@ -69,6 +70,37 @@ namespace WebsiteTuVan.Repositories
                 .Include(q => q.Patient)        // Lấy thông tin người hỏi
                 .Include(q => q.Attachments)    // Lấy file đính kèm của câu hỏi
                 .FirstOrDefaultAsync(q => q.Id == id);
+        }
+        public async Task<PagedResult<Question>> GetPublicQuestionsAsync(string? searchTerm, int? categoryId, int pageNumber, int pageSize)
+        {
+            var query = _dbSet.AsQueryable();
+
+            // --- BƯỚC 1: ÁP DỤNG TẤT CẢ CÁC BỘ LỌC (WHERE) TRƯỚC ---
+            query = query.Where(q => q.Status == "answered");
+            if (categoryId.HasValue && categoryId > 0)
+            {
+                query = query.Where(q => q.CategoryId == categoryId.Value);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                string lowerSearchTerm = searchTerm.ToLower().Trim();
+                query = query.Where(q => q.Title.ToLower().Contains(lowerSearchTerm) ||
+                                         q.Content.ToLower().Contains(lowerSearchTerm));
+            }
+
+            // --- BƯỚC 2: ÁP DỤNG INCLUDE VÀ THENINCLUDE SAU KHI ĐÃ LỌC ---
+            query = query
+                .Include(q => q.Category) 
+                .Include(q => q.Answers) 
+                    .ThenInclude(a => a.Doctor)
+                        .ThenInclude(d => d.User); 
+
+            // --- BƯỚC 3: ÁP DỤNG SẮP XẾP ---
+            query = query.OrderByDescending(q => q.CreatedAt);
+
+            // --- BƯỚC 4: GỌI PHÂN TRANG ---
+            return await PagedResult<Question>.CreateAsync(query, pageNumber, pageSize);
         }
     }
 }

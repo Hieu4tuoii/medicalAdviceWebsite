@@ -3,6 +3,7 @@ using WebsiteTuVan.Repositories;
 using WebsiteTuVan.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebsiteTuVan.Data;
+using WebsiteTuVan.ViewModels;
 
 namespace WebsiteTuVan.Controllers
 {
@@ -14,8 +15,6 @@ namespace WebsiteTuVan.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IAnswersRepository _answersRepository;
         private readonly IUsersRepository _usersRepository;
-        //private readonly UserManager<User> _userManager;
-        // Gi?i h?n c?u hình
         private const int MaxAttachmentCount = 4;
         private readonly long _maxFileSize = 5 * 1024 * 1024; // 5 MB
         private readonly string[] _allowedExtensions = { ".jpg", ".jpeg", ".png", ".gif" }; // Ch? cho phép ?nh
@@ -28,7 +27,6 @@ namespace WebsiteTuVan.Controllers
             _context = context;
             _answersRepository = answersRepository;
             _usersRepository = usersRepository;
-            //_userManager = userManager;
         }
 
         // --- HÀM HELPER KIỂM TRA VÀ LẤY USER TỪ SESSION ---
@@ -89,7 +87,6 @@ namespace WebsiteTuVan.Controllers
             return View(viewModel);
         }
 
-        // [Authorize] // Đảm bảo người dùng đã đăng nhập
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -115,7 +112,7 @@ namespace WebsiteTuVan.Controllers
         // [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken] // Ngăn chặn tấn công CSRF
-        public async Task<IActionResult> Create(CreateQuestionViewModel viewModel /*, List<IFormFile> attachments */)
+        public async Task<IActionResult> Create(CreateQuestionViewModel viewModel)
         {
             // Kiểm tra đăng nhập và lấy thông tin user
             var authResult = await GetCurrentUserFromSessionAsync();
@@ -132,7 +129,7 @@ namespace WebsiteTuVan.Controllers
             {
                 if (viewModel.Attachments.Count > MaxAttachmentCount)
                 {
-                    ModelState.AddModelError("Attachments", $"B?n ch? ???c phép t?i lên t?i ?a {MaxAttachmentCount} file.");
+                    ModelState.AddModelError("Attachments", $"Bạn chỉ được phép tải lên tối đa {MaxAttachmentCount} file.");
                 }
 
                 foreach (var file in viewModel.Attachments)
@@ -140,7 +137,7 @@ namespace WebsiteTuVan.Controllers
                     // Kiểm tra kích thước
                     if (file.Length > _maxFileSize)
                     {
-                        ModelState.AddModelError("Attachments", $"File '{file.FileName}' quá l?n. Kích th??c t?i ?a cho phép là {_maxFileSize / 1024 / 1024} MB.");
+                        ModelState.AddModelError("Attachments", $"File '{file.FileName}' quá lớn. Kích thước tối đa cho phép là {_maxFileSize / 1024 / 1024} MB.");
                     }
 
                     // Kiểm tra phần mở rộng (đuôi file)
@@ -155,14 +152,6 @@ namespace WebsiteTuVan.Controllers
             // --- **2. Kiểm tra ModelState tổng thể** ---
             if (ModelState.IsValid)
             {
-                // L?y User ID c?a ng??i dùng ?ang ??ng nh?p (c?n inject UserManager)
-                // var userId = _userManager.GetUserId(User);
-                // if (userId == null)
-                // {
-                //     // X? lý tr??ng h?p không tìm th?y user (ch?a ??ng nh?p?)
-                //     ModelState.AddModelError("", "Không th? xác ??nh ng??i dùng. Vui lòng ??ng nh?p l?i.");
-                //     return View(viewModel);
-                // }
                 // --- **3. Tạo và Lưu Question** ---
                 var question = new Question
                 {
@@ -334,5 +323,48 @@ namespace WebsiteTuVan.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Public(string? searchTerm, int? categoryId, int pageNumber = 1, int pageSize = 8) // pageSize=8 cho lưới 2 cột
+        {
+            // 1. Lấy dữ liệu câu hỏi phân trang, lọc, tìm kiếm
+            var pagedResult = await _repository.GetPublicQuestionsAsync(searchTerm, categoryId, pageNumber, pageSize);
+
+            // 2. Lấy danh sách tất cả chuyên mục cho sidebar
+            var categories = await _categoryRepository.GetAllAsync();
+            var categoryList = categories.ToList(); // Chuyển sang List
+
+            // 3. Mapping sang ViewModel con
+            var questionSummaries = pagedResult.Items.Select(q => {
+                var answerDoctor = q.Answers?.FirstOrDefault()?.Doctor;
+                var doctorUser = answerDoctor?.User;
+                int? experienceYears = null;
+                if (answerDoctor != null && answerDoctor.YearOfStartingWork > 1900 && answerDoctor.YearOfStartingWork <= DateTime.Now.Year)
+                {
+                    experienceYears = DateTime.Now.Year - answerDoctor.YearOfStartingWork;
+                }
+                // Lấy URL ảnh (thay bằng logic lấy ảnh thực tế nếu có)
+                string? imageUrl = "/images/question-placeholder.png"; // Ảnh mặc định
+
+                return new PublicQuestionSummary(
+                    q.Id, q.Title, doctorUser?.Name, experienceYears, imageUrl
+                );
+            }).ToList();
+
+            // 4. Tạo ViewModel chính
+            var viewModel = new PublicQuestionListViewModel
+            {
+                Questions = questionSummaries,
+                AllCategories = categoryList,
+                SearchTerm = searchTerm,
+                CategoryId = categoryId,
+                CategoryName = categoryId.HasValue ? categoryList.FirstOrDefault(c => c.Id == categoryId.Value)?.Name : null, // Lấy tên category đang lọc
+                CurrentPage = pagedResult.CurrentPage,
+                TotalPages = pagedResult.TotalPages
+                // TotalCount = pagedResult.TotalCount // Nếu cần
+            };
+
+            // 5. Trả về View
+            return View(viewModel);
+        }
     }
 }
